@@ -1,0 +1,59 @@
+start-symbol BLOCK
+
+context-free syntax
+	BLOCK ::= "{" BLOCK-STATEMENT* "}"
+
+context-free syntax
+	BLOCK-STATEMENT ::= CLASS-DECL
+	BLOCK-STATEMENT ::= VAR-DECL
+	BLOCK-STATEMENT ::= STATEMENT
+
+context-free syntax
+	STATEMENT ::= ASSIGN-STATEMENT
+	STATEMENT ::= WHILE-STATEMENT
+
+context-free syntax
+	CLASS-DECL ::= "class" ID EXTENDS? BLOCK
+
+context-free syntax
+	EXTENDS ::= "extends" USE
+
+context-free syntax
+	VAR-DECL ::= NAME ID ";"
+
+context-free syntax
+	ASSIGN-STATEMENT ::= NAME "=" EXP ";"
+
+context-free syntax
+	WHILE-STATEMENT ::= "while" "(" EXP ")" STATEMENT
+
+context-free syntax
+	EXP ::= NAME
+	EXP ::= BOOLEAN-LITERAL
+	EXP ::= EXP "||" EXP {left}
+	EXP ::= EXP "&&" EXP {left}
+	EXP ::= "( EXP ")"
+
+context-free priorities
+	EXP ::= EXP "&&" EXP >
+	EXP ::= EXP "||" EXP
+
+context-free syntax
+	USE ::= ID
+
+context-free syntax
+	NAME ::= ID
+	NAME ::= NAME "." UDE
+
+context-free syntax
+	BOOLEAN-LITERAL ::= "true"
+	BOOLEAN-LITERAL ::= "false"
+
+lexical syntax
+	ID ::= [a-zA-Z][a-zA-Z0-9]*
+
+lexical syntax
+	LAYOUT ::= [\ \t\n\r]*
+
+lexical syntax
+	COMMENT ::= "//" ~[\n\r]* [\n\r]
