@@ -1,0 +1,50 @@
+%package "picojava";
+%class "PicoJavaParser";
+%terminals EOF, IDENTIFIER, LPAREN, RPAREN, LBRACE, RBRACE, CLASS, EXTENDS, SEMICOLON;
+%terminals WHILE, OROR, ANDAND, DOT, TRUE, FALSE, EQ;
+
+%typeof expr = "Expr";
+
+%goal block;
+
+block 				= LBRACE block_statement* RBRACE 		{: /* block */ :}
+					;
+
+block_statement 	= class_decl 							{: /* bs class decl*/ :}
+					| var_decl  							{: /* bs var decl*/ :}
+					| statement 							{: /* bs statement */ :}
+					;
+
+statement 			= assign_statement 						{: /* s assign statement */ :}
+					| while_statement						{: /* s while statement */ :}
+					;
+
+class_decl			= CLASS IDENTIFIER ?extends block		{: return new ClassDecl(IDENTIFIER.value, extends, block); :}
+					;
+
+extends 			= EXTENDS use							{: return use.value; :}
+					;
+
+var_decl			= name IDENTIFIER SEMICOLON				{: return new VarDecl(name, IDENTIFIER.value); :}
+					;
+
+assign_statement	= name EQ expr SEMICOLON				{: return new AssignStatement(name, expr) :}
+					;
+
+while_statement		= WHILE LPAREN expr RPAREN statement	{: return new WhileStatement(expr, statement) :}
+					;
+
+expr				= name.name								{: return new VarExpr(name) :}
+					| TRUE									{: return new LitExpr(true); :}
+					| FALSE									{: return new LitExpr(false); :}
+					| expr.a ANDAND expr.b					{: return new AndExpr(a, b); :}
+					| expr.a OROR expr.b					{: return new OrExpr(a, b); :}
+					| LPAREN expr.e RPAREN					{: return e; :}
+					;
+
+use 				= IDENTIFIER							{: return new Name(IDENTIFIER.value) :}
+					;
+
+name 				= IDENTIFIER							{: return new Name(IDENTIFIER.value); :}
+					| name DOT use							{: return new Name(name, use); :}
+					;
