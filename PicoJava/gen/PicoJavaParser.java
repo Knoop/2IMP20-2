@@ -1,7 +1,7 @@
 package picojava;
 
-import picojava.ast.*;
 import beaver.*;
+import picojava.lang.ast.*;
 import java.util.ArrayList;
 
 /**
