@@ -1,7 +1,7 @@
 %package "picojava";
 %class "PicoJavaParser";
 
-%import "picojava.ast.*";
+%import "picojava.lang.ast.*";
 
 %terminals IDENTIFIER, LPAREN, RPAREN, LBRACE, RBRACE, CLASS, EXTENDS, SEMICOLON;
 %terminals WHILE, OROR, ANDAND, DOT, TRUE, FALSE, EQ;
