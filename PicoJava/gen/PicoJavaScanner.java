@@ -258,13 +258,6 @@ class PicoJavaScanner extends Scanner {
    */
   private int zzFinalHighSurrogate = 0;
 
-  /* user code: */
-
-private void debug(){
-	System.out.println(yytext());
-}
-
-
 
   /**
    * Creates a new scanner

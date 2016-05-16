@@ -18,27 +18,27 @@ public class PicoJavaParser extends Parser {
 		static public final short FALSE = 4;
 		static public final short ANDAND = 5;
 		static public final short OROR = 6;
-		static public final short WHILE = 7;
-		static public final short LBRACE = 8;
+		static public final short LBRACE = 7;
+		static public final short WHILE = 8;
 		static public final short RBRACE = 9;
-		static public final short EXTENDS = 10;
-		static public final short DOT = 11;
-		static public final short RPAREN = 12;
-		static public final short EQ = 13;
-		static public final short SEMICOLON = 14;
-		static public final short CLASS = 15;
+		static public final short DOT = 10;
+		static public final short RPAREN = 11;
+		static public final short EQ = 12;
+		static public final short SEMICOLON = 13;
+		static public final short CLASS = 14;
+		static public final short EXTENDS = 15;
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9o5abjF4r4KXLTRf1UGpXGOUg4je7X5mSGOJGmy4DvyCL6CYfhuP4pu3$nOxrR5MnKlRBz" +
-		"pUbec4nDcykszpjfdzfvfZwHTBMjQULLqHcTLqsMLLBONYZMkCL#R7DJicugkXdU9wehV7t" +
-		"EVKsn$r24dzfiuWIue8STQqe8MZytBQcjE3RMyQleuhnEgUtLgLBdWrMaV7HVDLDL9fatHA" +
-		"xBFzbKpcaLtrDLvHQY4Bt1Un8GwJtMKetVRrvgXLWarv#M2b#CkGfdlA3AZJAoYI#WgVfwf" +
-		"OyTcrx76bum7DOXbtZTRSMhInu4IRzLYMaAlY5mXJg4do7cggtlorn8yXWPi1g$jSXhVJRe" +
-		"BzyFwAJmAUWSwy22iLs0Zw3Mu0rTX6vx0iqplwt3hFpEVmqsu3Gl1gm$hPjOBUJ$b7MRxuF" +
-		"L9MyCPxdqoS#wbz9MKlXRoZPJtCFFiUdPUgZRyFKiPVrMZotx1Npkmd$OZE5zyV1rM#pv#W" +
-		"dVmrZuGNrhFtdl$ZRsoldqVTVi8XuXMEAUEFAUL$nITSARco4Ec0qtgJNAT4zTYVuDzC#XP" +
-		"pb8D$uZ2Y8Xrx2ce#m$dHdnP");
+		"U9nrabjF4q4OXjzjmI9OQBUbRYijebO1nPgGQ8m9jzwfYUW5HY#umiGVuPyLF7FmZEBdCzF" +
+		"fEjcKtJpVuVswy#viHz8hzTLGMnSqhQkwffkQqbbbEgE9mgJY9tsjAUM#uRMIcPRj3trFPR" +
+		"KqeqbxW$8RvP8kQWbbL9sM##hgl8yT7nTylEoTNRMgELtnNOf7gggk#suPpngUvr1dqUjsf" +
+		"2RQFFMYLfZLDSa#cYWj73AUglBSmjY9qnBkeTQG$6uJzbx1OPQw6vGIVXCee#gqx5PCnqJd" +
+		"FAmQxdlH9NWax7xOJU4vXsSDjO7kSWsjwkiIRpPuBNzrOH4ow0LjoUKOhgVm4BOYRHjUXBe" +
+		"DpqAzQcOdeHx0DAp34tWEEuMrxy3zCPuluHuyWCsWFOxcCoxZTJ3IHhw5THx1Xdl$IDkCzn" +
+		"RLjw9wFUJRaPRlF$HtYtxHR2FaIa4VAB$i64xib$sq7q7vQbzyVklZeOy7y07UssVYhdsoZ" +
+		"rv$PtlstRxbg#t3NueE$sl2ENMKEAs2X9DGvgGcESr0nadBc7NuRPiyJz$Y7ANC$bFEgT7N" +
+		"FMNr$W7EWtPz");
 
 	private final Action[] actions;
 
@@ -101,9 +101,7 @@ public class PicoJavaParser extends Parser {
 					 return ws;
 				}
 			},
-			Action.NONE,  	// [11] opt$use = 
-			Action.RETURN,	// [12] opt$use = use
-			new Action() {	// [13] class_decl = CLASS opt$use.u extends.e block.b
+			new Action() {	// [11] class_decl = CLASS use.u extends.e block.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_u = _symbols[offset + 2];
 					final LitName u = (LitName) _symbol_u.value;
@@ -114,14 +112,23 @@ public class PicoJavaParser extends Parser {
 					 return new ClassDecl(u, e, b);
 				}
 			},
-			new Action() {	// [14] extends = EXTENDS use.u
+			new Action() {	// [12] class_decl = CLASS use.u block.b
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					final Symbol _symbol_u = _symbols[offset + 2];
+					final LitName u = (LitName) _symbol_u.value;
+					final Symbol _symbol_b = _symbols[offset + 3];
+					final Block b = (Block) _symbol_b.value;
+					 return new ClassDecl(u, null, b);
+				}
+			},
+			new Action() {	// [13] extends = EXTENDS use.u
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_u = _symbols[offset + 2];
 					final LitName u = (LitName) _symbol_u.value;
 					 return u;
 				}
 			},
-			new Action() {	// [15] var_decl = name.n use.u SEMICOLON
+			new Action() {	// [14] var_decl = name.n use.u SEMICOLON
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_n = _symbols[offset + 1];
 					final Name n = (Name) _symbol_n.value;
@@ -130,7 +137,7 @@ public class PicoJavaParser extends Parser {
 					 return new VarDecl(n, u);
 				}
 			},
-			new Action() {	// [16] assign_statement = name.n EQ expr.e SEMICOLON
+			new Action() {	// [15] assign_statement = name.n EQ expr.e SEMICOLON
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_n = _symbols[offset + 1];
 					final Name n = (Name) _symbol_n.value;
@@ -139,7 +146,7 @@ public class PicoJavaParser extends Parser {
 					 return new AssignStatement(n, e);
 				}
 			},
-			new Action() {	// [17] while_statement = WHILE LPAREN expr.e RPAREN statement.s
+			new Action() {	// [16] while_statement = WHILE LPAREN expr.e RPAREN statement.s
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_e = _symbols[offset + 3];
 					final Expr e = (Expr) _symbol_e.value;
@@ -148,24 +155,24 @@ public class PicoJavaParser extends Parser {
 					 return new WhileStatement(e, s);
 				}
 			},
-			new Action() {	// [18] expr = name.n
+			new Action() {	// [17] expr = name.n
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_n = _symbols[offset + 1];
 					final Name n = (Name) _symbol_n.value;
 					 return new VarExpr(n);
 				}
 			},
-			new Action() {	// [19] expr = TRUE
+			new Action() {	// [18] expr = TRUE
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					 return new LitExpr(true);
 				}
 			},
-			new Action() {	// [20] expr = FALSE
+			new Action() {	// [19] expr = FALSE
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					 return new LitExpr(false);
 				}
 			},
-			new Action() {	// [21] expr = expr.a ANDAND expr.b
+			new Action() {	// [20] expr = expr.a ANDAND expr.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -174,7 +181,7 @@ public class PicoJavaParser extends Parser {
 					 return new AndExpr(a, b);
 				}
 			},
-			new Action() {	// [22] expr = expr.a OROR expr.b
+			new Action() {	// [21] expr = expr.a OROR expr.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_a = _symbols[offset + 1];
 					final Expr a = (Expr) _symbol_a.value;
@@ -183,34 +190,34 @@ public class PicoJavaParser extends Parser {
 					 return new OrExpr(a, b);
 				}
 			},
-			new Action() {	// [23] expr = LPAREN expr.e RPAREN
+			new Action() {	// [22] expr = LPAREN expr.e RPAREN
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_e = _symbols[offset + 2];
 					final Expr e = (Expr) _symbol_e.value;
 					 return e;
 				}
 			},
-			new Action() {	// [24] use = IDENTIFIER.i
+			new Action() {	// [23] use = IDENTIFIER.i
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_i = _symbols[offset + 1];
 					final String i = (String) _symbol_i.value;
 					 return new LitName(i);
 				}
 			},
-			new Action() {	// [25] name = use.u
+			new Action() {	// [24] name = use.u
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_u = _symbols[offset + 1];
 					final LitName u = (LitName) _symbol_u.value;
-					 return new Name(u);
+					 return new ComposedName(u);
 				}
 			},
-			new Action() {	// [26] name = name.n DOT use.u
+			new Action() {	// [25] name = name.n DOT use.u
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					final Symbol _symbol_n = _symbols[offset + 1];
 					final Name n = (Name) _symbol_n.value;
 					final Symbol _symbol_u = _symbols[offset + 3];
 					final LitName u = (LitName) _symbol_u.value;
-					 return new Name(n, u);
+					 return new ComposedName(n, u);
 				}
 			}
 		};
