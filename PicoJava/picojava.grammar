@@ -60,6 +60,6 @@ expr				= name.n								{: return new VarExpr(n); :}
 use 				= IDENTIFIER.i							{: return new LitName(i); :}
 					;
 
-name 				= use.u									{: return new Name(u); :}
-					| name.n DOT use.u						{: return new Name(n, u); :}
+name 				= use.u									{: return new ComposedName(u); :}
+					| name.n DOT use.u						{: return new ComposedName(n, u); :}
 					;
