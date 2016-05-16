@@ -7,7 +7,7 @@ import beaver.Scanner;
  * Lexer for the PicoJava language as defined in the first part of assignment 2 of course 2IMP20 given at the Eindhoven University of Technology (TU/e) in the year 2015-2016. 
  */
 %%
-%class LanguageScanner
+%class PicoJavaScanner
 %extends Scanner
 %function nextToken
 %type Symbol
