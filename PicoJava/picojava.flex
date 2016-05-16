@@ -22,17 +22,12 @@ import picojava.lang.Token.Terminal;
 
 /* Whitespace characters */
 EndOfLine = \n|\r|\r\n
-Layout = {EndOfLine} | [\ \t]
+Layout = {EndOfLine} | [\ \t]*
 
 Comment = "//" ~EndOfLine* EndOfLine
-Identifier = [a-zA-Z][a-zA-Z0-9]
-
-%state BLOCK
+Identifier = [a-zA-Z][a-zA-Z0-9]*
 
 %% 
-
-"{"                            { return symbol(Terminals.LBRACE);}
-"}"                            { return symbol(Terminals.RBRACE); }
 
 /* keywords */
 "class"                        { return new Token(Terminal.CLASS); }
@@ -42,6 +37,7 @@ Identifier = [a-zA-Z][a-zA-Z0-9]
 "true"                         { return new Token(Terminal.TRUE); }
 "false"                        { return new Token(Terminal.FALSE); }
    
+"while"						   { return new Token(Terminal.WHILE); }
   
 /* separators */
 "("                            { return new Token(Terminal.LPAREN); }
