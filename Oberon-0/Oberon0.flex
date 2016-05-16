@@ -10,11 +10,18 @@ package oberon0.parser;
 
 letter = [A-z]
 digit = [0-9]
-newLine = \n
-ident = {letter}({letter}|{digit})*
+newLine = \r|\n|\r\n
+ident = {letter} ({letter} | {digit})*
 integer = ({digit})+
 number = {integer}
+whitespace = {newLine}|[ \t\f]
+stringDelimiter = \"
 
+stringChars = [^\"]
+
+comment = \(\*[^\(\)\*]*\*\)
+
+%state STRING
 
 %%
 
@@ -24,6 +31,7 @@ number = {integer}
     "BEGIN"         {return ("begin");}
     "END"           {return ("end");}
     "MODULE"        {return ("module");}
+    "IMPORT"        {return ("import");}
     "PROCEDURE"        {return ("procedure");}
 
     "IF"        {return ("if");}
@@ -32,22 +40,28 @@ number = {integer}
     "DO"        {return ("do");}
     "ELSE"        {return ("else");}
     "ELSIF"        {return ("else_if");}
+    "REPEAT"        {return ("repeat");}
+    "UNTIL"        {return ("until");}
 
     "ARRAY"        {return ("array");}
     "OF"        {return ("of");}
     "RECORD"        {return ("record");}
     "VAR"        {return ("var");}
     "CONST"        {return ("const");}
-    "TYPE"        {return ("type");}
+    "CHAR"        {return ("char");}
+    "INTEGER"        {return ("integer");}
+    "LONGINT"        {return ("long");}
 
     "("        {return ("par_open");}
     ")"        {return ("par_close");}
     "."        {return ("dot");}
     ","        {return ("comma");}
+    ":"         {return ("colon");}
     ";"        {return ("semicolon");}
     "~"        {return ("tilde");}
     "["        {return ("brack_open");}
     "]"        {return ("brack_close");}
+    "|"        {return ("pipe");}
 
     "*"        {return ("star");}
     "DIV"        {return ("div");}
@@ -66,8 +80,18 @@ number = {integer}
 
     ":="        {return ("assign");}
 
+    {comment}      { /* ignore */ }
+
+    {stringDelimiter}        { yybegin(STRING); }
+
     {ident}         {return ("identifier");}
     {integer}       {return ("number");}
     {number}       {return ("number");}
-    {newLine}      {return ("new_line");}
+    {whitespace}    { /* ignore */ }
+}
+
+<STRING> {
+    {stringDelimiter}   { yybegin(YYINITIAL);
+                         return ("string_literal"); }
+    {stringChars}      {/* ignore */}
 }
