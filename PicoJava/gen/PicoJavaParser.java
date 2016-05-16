@@ -1,5 +1,6 @@
 package picojava;
 
+import picojava.ast.*;
 import beaver.*;
 import java.util.ArrayList;
 
@@ -23,21 +24,21 @@ public class PicoJavaParser extends Parser {
 		static public final short EXTENDS = 10;
 		static public final short DOT = 11;
 		static public final short RPAREN = 12;
-		static public final short SEMICOLON = 13;
-		static public final short EQ = 14;
+		static public final short EQ = 13;
+		static public final short SEMICOLON = 14;
 		static public final short CLASS = 15;
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9nzabjF4r4KHh$f5DlIGeTUB6qj5qN0Mcd2Yp567v1eWW$6e0#y41B#23$M2oegtk$Th7C" +
-		"yBPC6ECdQ#zkNxZaptPBsLLL6arhMYgvhJR7oAjWBhUgIiggQZMevJRWQQbKb#wkE6gYo$L" +
-		"6Ht5KjQ36bplEtL5FFJ#oefQRQdZblBsjMIwfeIZTztD4Lv#qhwXfqwOirJT#C4ljaNrH7p" +
-		"MbUDvIWAxnBJH7rF9EQL79Cw51JgbRmjOXQ2vqm8SSx5bGcbs5#DgNEymdg$qJt#mc#bQFe" +
-		"xJJtBr5lOrqyx9Zqob7aVdNw8hvWdlmKgeZESC$#0SOukBA$jrHoEKx3#JISHr279o7UWMT" +
-		"1RyDjU1hYHRWJz38yX2vimNFO7Pkz1dVFUEOUhCDzo8RSus6Tgny5VvpA3SwOCtp6Wn1lZl" +
-		"UaUaiftGl#NYgtDTQ$SS6ipU1NnlBzqslPR$Xdl#od$GYPpzw#3j6njn$XBRonzzYNTcJlV" +
-		"FxGNjbt#pQQzW462BVf4JlfoB2PWeZ$BsOlen6LG8jw2p$BnhNfRz9NHTVOfndofyGZ6iI9" +
-		"9zRy2LhQUOy=");
+		"U9o5abjF4r4KXLTRf1UGpXGOUg4je7X5mSGOJGmy4DvyCL6CYfhuP4pu3$nOxrR5MnKlRBz" +
+		"pUbec4nDcykszpjfdzfvfZwHTBMjQULLqHcTLqsMLLBONYZMkCL#R7DJicugkXdU9wehV7t" +
+		"EVKsn$r24dzfiuWIue8STQqe8MZytBQcjE3RMyQleuhnEgUtLgLBdWrMaV7HVDLDL9fatHA" +
+		"xBFzbKpcaLtrDLvHQY4Bt1Un8GwJtMKetVRrvgXLWarv#M2b#CkGfdlA3AZJAoYI#WgVfwf" +
+		"OyTcrx76bum7DOXbtZTRSMhInu4IRzLYMaAlY5mXJg4do7cggtlorn8yXWPi1g$jSXhVJRe" +
+		"BzyFwAJmAUWSwy22iLs0Zw3Mu0rTX6vx0iqplwt3hFpEVmqsu3Gl1gm$hPjOBUJ$b7MRxuF" +
+		"L9MyCPxdqoS#wbz9MKlXRoZPJtCFFiUdPUgZRyFKiPVrMZotx1Npkmd$OZE5zyV1rM#pv#W" +
+		"dVmrZuGNrhFtdl$ZRsoldqVTVi8XuXMEAUEFAUL$nITSARco4Ec0qtgJNAT4zTYVuDzC#XP" +
+		"pb8D$uZ2Y8Xrx2ce#m$dHdnP");
 
 	private final Action[] actions;
 
@@ -47,77 +48,111 @@ public class PicoJavaParser extends Parser {
 			Action.RETURN,	// [0] $goal = block
 			new Action() {	// [1] lst$block_statement = block_statement
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1].value); return new Symbol(lst);
 				}
 			},
 			new Action() {	// [2] lst$block_statement = lst$block_statement block_statement
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
+					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2].value); return _symbols[offset + 1];
 				}
 			},
 			Action.NONE,  	// [3] opt$lst$block_statement = 
 			Action.RETURN,	// [4] opt$lst$block_statement = lst$block_statement
-			new Action() {	// [5] block = LBRACE opt$lst$block_statement RBRACE
+			new Action() {	// [5] block = LBRACE opt$lst$block_statement.bs RBRACE
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 /* block */
+					final Symbol _symbol_bs = _symbols[offset + 2];
+					final ArrayList _list_bs = (ArrayList) _symbol_bs.value;
+					final BlockStatement[] bs = _list_bs == null ? new BlockStatement[0] : (BlockStatement[]) _list_bs.toArray(new BlockStatement[_list_bs.size()]);
+					 return new Block(bs);
 				}
 			},
-			new Action() {	// [6] block_statement = class_decl
+			new Action() {	// [6] block_statement = class_decl.cd
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 /* bs class decl*/
+					final Symbol _symbol_cd = _symbols[offset + 1];
+					final ClassDecl cd = (ClassDecl) _symbol_cd.value;
+					 return cd;
 				}
 			},
-			new Action() {	// [7] block_statement = var_decl
+			new Action() {	// [7] block_statement = var_decl.vd
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 /* bs var decl*/
+					final Symbol _symbol_vd = _symbols[offset + 1];
+					final VarDecl vd = (VarDecl) _symbol_vd.value;
+					 return vd;
 				}
 			},
-			new Action() {	// [8] block_statement = statement
+			new Action() {	// [8] block_statement = statement.s
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 /* bs statement */
+					final Symbol _symbol_s = _symbols[offset + 1];
+					final Statement s = (Statement) _symbol_s.value;
+					 return s;
 				}
 			},
-			new Action() {	// [9] statement = assign_statement
+			new Action() {	// [9] statement = assign_statement.as
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 /* s assign statement */
+					final Symbol _symbol_as = _symbols[offset + 1];
+					final AssignStatement as = (AssignStatement) _symbol_as.value;
+					 return as;
 				}
 			},
-			new Action() {	// [10] statement = while_statement
+			new Action() {	// [10] statement = while_statement.ws
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 /* s while statement */
+					final Symbol _symbol_ws = _symbols[offset + 1];
+					final WhileStatement ws = (WhileStatement) _symbol_ws.value;
+					 return ws;
 				}
 			},
-			Action.NONE,  	// [11] opt$IDENTIFIER = 
-			Action.RETURN,	// [12] opt$IDENTIFIER = IDENTIFIER
-			new Action() {	// [13] class_decl = CLASS opt$IDENTIFIER extends block
+			Action.NONE,  	// [11] opt$use = 
+			Action.RETURN,	// [12] opt$use = use
+			new Action() {	// [13] class_decl = CLASS opt$use.u extends.e block.b
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 return new ClassDecl(IDENTIFIER.value, extends, block);
+					final Symbol _symbol_u = _symbols[offset + 2];
+					final LitName u = (LitName) _symbol_u.value;
+					final Symbol _symbol_e = _symbols[offset + 3];
+					final Name e = (Name) _symbol_e.value;
+					final Symbol _symbol_b = _symbols[offset + 4];
+					final Block b = (Block) _symbol_b.value;
+					 return new ClassDecl(u, e, b);
 				}
 			},
-			new Action() {	// [14] extends = EXTENDS use
+			new Action() {	// [14] extends = EXTENDS use.u
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 return use.value;
+					final Symbol _symbol_u = _symbols[offset + 2];
+					final LitName u = (LitName) _symbol_u.value;
+					 return u;
 				}
 			},
-			new Action() {	// [15] var_decl = name IDENTIFIER SEMICOLON
+			new Action() {	// [15] var_decl = name.n use.u SEMICOLON
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 return new VarDecl(name, IDENTIFIER.value);
+					final Symbol _symbol_n = _symbols[offset + 1];
+					final Name n = (Name) _symbol_n.value;
+					final Symbol _symbol_u = _symbols[offset + 2];
+					final LitName u = (LitName) _symbol_u.value;
+					 return new VarDecl(n, u);
 				}
 			},
-			new Action() {	// [16] assign_statement = name EQ expr SEMICOLON
+			new Action() {	// [16] assign_statement = name.n EQ expr.e SEMICOLON
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 return new AssignStatement(name, expr)
+					final Symbol _symbol_n = _symbols[offset + 1];
+					final Name n = (Name) _symbol_n.value;
+					final Symbol _symbol_e = _symbols[offset + 3];
+					final Expr e = (Expr) _symbol_e.value;
+					 return new AssignStatement(n, e);
 				}
 			},
-			new Action() {	// [17] while_statement = WHILE LPAREN expr RPAREN statement
+			new Action() {	// [17] while_statement = WHILE LPAREN expr.e RPAREN statement.s
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 return new WhileStatement(expr, statement)
+					final Symbol _symbol_e = _symbols[offset + 3];
+					final Expr e = (Expr) _symbol_e.value;
+					final Symbol _symbol_s = _symbols[offset + 5];
+					final Statement s = (Statement) _symbol_s.value;
+					 return new WhileStatement(e, s);
 				}
 			},
-			new Action() {	// [18] expr = name.name
+			new Action() {	// [18] expr = name.n
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					final Symbol name = _symbols[offset + 1];
-					 return new VarExpr(name)
+					final Symbol _symbol_n = _symbols[offset + 1];
+					final Name n = (Name) _symbol_n.value;
+					 return new VarExpr(n);
 				}
 			},
 			new Action() {	// [19] expr = TRUE
@@ -155,19 +190,27 @@ public class PicoJavaParser extends Parser {
 					 return e;
 				}
 			},
-			new Action() {	// [24] use = IDENTIFIER
+			new Action() {	// [24] use = IDENTIFIER.i
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 return new Name(IDENTIFIER.value)
+					final Symbol _symbol_i = _symbols[offset + 1];
+					final String i = (String) _symbol_i.value;
+					 return new LitName(i);
 				}
 			},
-			new Action() {	// [25] name = IDENTIFIER
+			new Action() {	// [25] name = use.u
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 return new Name(IDENTIFIER.value);
+					final Symbol _symbol_u = _symbols[offset + 1];
+					final LitName u = (LitName) _symbol_u.value;
+					 return new Name(u);
 				}
 			},
-			new Action() {	// [26] name = name DOT use
+			new Action() {	// [26] name = name.n DOT use.u
 				public Symbol reduce(Symbol[] _symbols, int offset) {
-					 return new Name(name, use);
+					final Symbol _symbol_n = _symbols[offset + 1];
+					final Name n = (Name) _symbol_n.value;
+					final Symbol _symbol_u = _symbols[offset + 3];
+					final LitName u = (LitName) _symbol_u.value;
+					 return new Name(n, u);
 				}
 			}
 		};
