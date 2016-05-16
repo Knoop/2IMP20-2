@@ -33,7 +33,8 @@ statement 			= assign_statement.as 					{: return as; :}
 					| while_statement.ws					{: return ws; :}
 					;
 
-class_decl			= CLASS use.u ?extends.e block.b		{: return new ClassDecl(u, e, b); :}
+class_decl			= CLASS use.u extends.e block.b			{: return new ClassDecl(u, e, b); :}
+					| CLASS use.u block.b					{: return new ClassDecl(u, null, b); :}
 					;
 
 extends 			= EXTENDS use.u							{: return u; :}
