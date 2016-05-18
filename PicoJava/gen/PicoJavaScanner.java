@@ -3,8 +3,8 @@
 package picojava;
 
 import beaver.Scanner;
-import picojava.lang.Token;
-import picojava.lang.Token.Terminal;
+import beaver.Symbol;
+import picojava.PicoJavaParser.Terminals;
 
 /**
  * Lexer for the PicoJava language as defined in the first part of assignment 2 of course 2IMP20 given at the Eindhoven University of Technology (TU/e) in the year 2015-2016. 
@@ -258,6 +258,17 @@ class PicoJavaScanner extends Scanner {
    */
   private int zzFinalHighSurrogate = 0;
 
+  /* user code: */
+
+	private Symbol symbol(short id){
+		return new Symbol(id);
+	}
+	
+	private Symbol symbol(short id, String value){
+		return new Symbol(id, value);
+	}
+
+
 
   /**
    * Creates a new scanner
@@ -489,7 +500,7 @@ class PicoJavaScanner extends Scanner {
    * @return      the next token
    * @exception   java.io.IOException  if any I/O-Error occurs
    */
-  public Token nextToken() throws java.io.IOException, Scanner.Exception {
+  public Symbol nextToken() throws java.io.IOException, Scanner.Exception {
     int zzInput;
     int zzAction;
 
@@ -625,7 +636,7 @@ class PicoJavaScanner extends Scanner {
 
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
-          { 	return new Token(Terminal.EOF);
+          { 	return symbol(Terminals.EOF);
  }
       }
       else {
@@ -635,68 +646,67 @@ class PicoJavaScanner extends Scanner {
             }
           case 19: break;
           case 2: 
-            { throw new Error("Illegal character <"+
-                                                        yytext()+">");
+            { throw new Error("Illegal character <"+ yytext()+">");
             }
           case 20: break;
           case 3: 
-            { return new Token(Terminal.IDENTIFIER, yytext());
+            { return symbol(Terminals.IDENTIFIER, yytext());
             }
           case 21: break;
           case 4: 
-            { return new Token(Terminal.LPAREN);
+            { return symbol(Terminals.LPAREN);
             }
           case 22: break;
           case 5: 
-            { return new Token(Terminal.RPAREN);
+            { return symbol(Terminals.RPAREN);
             }
           case 23: break;
           case 6: 
-            { return new Token(Terminal.LBRACE);
+            { return symbol(Terminals.LBRACE);
             }
           case 24: break;
           case 7: 
-            { return new Token(Terminal.RBRACE);
+            { return symbol(Terminals.RBRACE);
             }
           case 25: break;
           case 8: 
-            { return new Token(Terminal.SEMICOLON);
+            { return symbol(Terminals.SEMICOLON);
             }
           case 26: break;
           case 9: 
-            { return new Token(Terminal.DOT);
+            { return symbol(Terminals.DOT);
             }
           case 27: break;
           case 10: 
-            { return new Token(Terminal.EQ);
+            { return symbol(Terminals.EQ);
             }
           case 28: break;
           case 11: 
-            { return new Token(Terminal.ANDAND);
+            { return symbol(Terminals.ANDAND);
             }
           case 29: break;
           case 12: 
-            { return new Token(Terminal.OROR);
+            { return symbol(Terminals.OROR);
             }
           case 30: break;
           case 13: 
-            { return new Token(Terminal.TRUE);
+            { return symbol(Terminals.TRUE);
             }
           case 31: break;
           case 14: 
-            { return new Token(Terminal.FALSE);
+            { return symbol(Terminals.FALSE);
             }
           case 32: break;
           case 15: 
-            { return new Token(Terminal.CLASS);
+            { return symbol(Terminals.CLASS);
             }
           case 33: break;
           case 16: 
-            { return new Token(Terminal.WHILE);
+            { return symbol(Terminals.WHILE);
             }
           case 34: break;
           case 17: 
-            { return new Token(Terminal.EXTENDS);
+            { return symbol(Terminals.EXTENDS);
             }
           case 35: break;
           case 18: 
