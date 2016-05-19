@@ -21,7 +21,7 @@ Selector =
     ;
 
 Factor =
-        identifier Selector
+        identifier Selector*
     |   number
     |   par_open Expression par_close
     |   tilde Factor
@@ -137,7 +137,7 @@ RecordTypeInner =
     ;
 
 Type =
-        identifier
+        identifier Selector*
     |   ArrayType
     |   RecordType
     |   integer
@@ -145,30 +145,19 @@ Type =
     |   char_
     ;
 
-FPSection =
-    |   IdentifierList colon Type
-    |   var IdentifierList colon Type
-    ;
+FPSection = var? IdentifierList colon Type;
 
-FormalParameters =
-        par_open par_close
-    |   par_open FormalParametersInner par_close
-    ;
+FormalParameters = par_open FormalParametersInner? par_close;
 
-FormalParametersInner =
-        FPSection
-    |   FormalParametersInner semicolon FormalParametersInner
-    ;
+FormalParametersInner = FPSection FPSectionRepeat*;
 
-ProcedureHeading =
-        procedure identifier
-    |   procedure identifier FormalParameters
-    ;
+FPSectionRepeat = semicolon FPSection;
 
-ProcedureBody =
-        Declarations end identifier
-    |   Declarations begin StatementSequence end identifier
-    ;
+ProcedureHeading = procedure identifier FormalParameters?;
+
+ProcedureBody = Declarations ProcedureBodyOptional? end identifier;
+
+ProcedureBodyOptional = begin StatementSequence;
 
 ProcedureDeclaration = ProcedureHeading semicolon ProcedureBody;
 
@@ -178,16 +167,13 @@ ConstDeclarationPart = identifier eq Expression semicolon;
 
 TypeDeclarationPart = identifier eq Type semicolon;
 
-VarDeclarationPart = IdentifierList eq Type semicolon;
+VarDeclarationPart = IdentifierList colon Type semicolon;
 
-ConstDeclaration =
-        const_ ConstDeclarationPart*;
+ConstDeclaration = const_ ConstDeclarationPart*;
 
-TypeDeclaration =
-        type_dec TypeDeclarationPart*;
+TypeDeclaration = type_dec TypeDeclarationPart*;
 
-VarDeclaration =
-        var VarDeclarationPart*;
+VarDeclaration = var VarDeclarationPart*;
 
 Module = ModuleStart ImportStatement? Declarations ModuleBegin* ModuleEnd;
 

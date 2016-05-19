@@ -16,7 +16,6 @@ import oberon0.parser.OberonParser.Terminals;
 %eofval{
 	return new Symbol(Terminals.EOF, "end-of-file");
 %eofval}
-%unicode
 %line
 %column
 
@@ -65,17 +64,18 @@ comment = \(\*[^\(\)\*]*\*\)
     "LONGINT"        {return new Symbol(Terminals.long_);}
     "TYPE"          {return new Symbol(Terminals.type_dec);}
 
+    /*separators*/
     "("        {return new Symbol(Terminals.par_open);}
     ")"        {return new Symbol(Terminals.par_close);}
     "."        {return new Symbol(Terminals.dot);}
     ","        {return new Symbol(Terminals.comma);}
     ":"         {return new Symbol(Terminals.colon);}
     ";"        {return new Symbol(Terminals.semicolon);}
-    "~"        {return new Symbol(Terminals.tilde);}
     "["        {return new Symbol(Terminals.brack_open);}
     "]"        {return new Symbol(Terminals.brack_close);}
     "|"        {return new Symbol(Terminals.pipe);}
 
+    /*operators*/
     "*"        {return new Symbol(Terminals.star);}
     "DIV"        {return new Symbol(Terminals.div);}
     "MOD"        {return new Symbol(Terminals.mod);}
@@ -83,13 +83,13 @@ comment = \(\*[^\(\)\*]*\*\)
     "+"        {return new Symbol(Terminals.plus);}
     "-"        {return new Symbol(Terminals.minus);}
     "OR"        {return new Symbol(Terminals.or);}
-
     "="        {return new Symbol(Terminals.eq);}
     "#"        {return new Symbol(Terminals.hash);}
     "<"        {return new Symbol(Terminals.st);}
     "<="        {return new Symbol(Terminals.seq);}
     ">"        {return new Symbol(Terminals.gt);}
     ">="        {return new Symbol(Terminals.geq);}
+    "~"        {return new Symbol(Terminals.tilde);}
 
     ":="        {return new Symbol(Terminals.assign);}
 

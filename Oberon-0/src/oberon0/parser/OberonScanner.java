@@ -709,7 +709,7 @@ public class OberonScanner extends Scanner {
 
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
-          { 	return new Symbol(Terminals.EOF);
+          { 	return new Symbol(Terminals.EOF, "end-of-file");
  }
       }
       else {
