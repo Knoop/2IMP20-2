@@ -15,92 +15,96 @@ public class OberonParser extends Parser {
 		static public final short semicolon = 2;
 		static public final short plus = 3;
 		static public final short minus = 4;
-		static public final short end = 5;
-		static public final short dot = 6;
-		static public final short par_close = 7;
+		static public final short par_close = 5;
+		static public final short end = 6;
+		static public final short dot = 7;
 		static public final short while_ = 8;
 		static public final short repeat = 9;
 		static public final short brack_open = 10;
 		static public final short if_ = 11;
 		static public final short par_open = 12;
-		static public final short comma = 13;
-		static public final short array = 14;
-		static public final short record = 15;
-		static public final short integer = 16;
-		static public final short long_ = 17;
-		static public final short char_ = 18;
-		static public final short number = 19;
-		static public final short tilde = 20;
-		static public final short string_literal = 21;
-		static public final short eq = 22;
-		static public final short else_if = 23;
-		static public final short colon = 24;
-		static public final short var = 25;
-		static public final short begin = 26;
-		static public final short then = 27;
-		static public final short else_ = 28;
-		static public final short procedure = 29;
-		static public final short star = 30;
-		static public final short div = 31;
-		static public final short mod = 32;
-		static public final short amp = 33;
-		static public final short or = 34;
-		static public final short const_ = 35;
-		static public final short do_ = 36;
-		static public final short until = 37;
-		static public final short module = 38;
-		static public final short brack_close = 39;
-		static public final short assign = 40;
-		static public final short of = 41;
-		static public final short import_ = 42;
-		static public final short hash = 43;
-		static public final short st = 44;
-		static public final short seq = 45;
-		static public final short gt = 46;
-		static public final short geq = 47;
-		static public final short pipe = 48;
+		static public final short array = 13;
+		static public final short record = 14;
+		static public final short integer = 15;
+		static public final short long_ = 16;
+		static public final short char_ = 17;
+		static public final short eq = 18;
+		static public final short comma = 19;
+		static public final short number = 20;
+		static public final short tilde = 21;
+		static public final short string_literal = 22;
+		static public final short colon = 23;
+		static public final short var = 24;
+		static public final short begin = 25;
+		static public final short then = 26;
+		static public final short else_if = 27;
+		static public final short procedure = 28;
+		static public final short star = 29;
+		static public final short div = 30;
+		static public final short mod = 31;
+		static public final short amp = 32;
+		static public final short or = 33;
+		static public final short hash = 34;
+		static public final short st = 35;
+		static public final short seq = 36;
+		static public final short gt = 37;
+		static public final short geq = 38;
+		static public final short pipe = 39;
+		static public final short const_ = 40;
+		static public final short do_ = 41;
+		static public final short until = 42;
+		static public final short module = 43;
+		static public final short brack_close = 44;
+		static public final short assign = 45;
+		static public final short else_ = 46;
+		static public final short of = 47;
+		static public final short import_ = 48;
 		static public final short type_dec = 49;
 	}
 
 	static final ParsingTables PARSING_TABLES = new ParsingTables(
-		"U9nzbmUSLSKLnhzxjmLaYLYGfHW24gCnXGLsXGKN1KMa1PIWD2ahe7H4m21LG0JfooAe828" +
-		"Y7QHtB1G1HINH63H54pKc9YQQnDJZ$ywR1#zT5jxzVUSxyysPSkVDp3jF2jvMeQvNUzkXN5" +
-		"NH9RfKb#boNQm2NQdhL1Dk0hTNCtqphNwzCdKlUbFTaQPNrWqgLdFTg9lKWlgVwiwq#lOwg" +
-		"cun9KDzOafttHDJ5kl1D6MnwkeLtSySdjQpUafBjGpjaAv9AtzN3TI8EQHgTHMcb4Uuzw#R" +
-		"rkvgt#uQzCGwj5FLX6PZDHQzixgYtArwl7yYDbBoK2hhAjNGNMgb7#Y7#f7g#nwkZPLlLf5" +
-		"orDgNsdhkf9Rqc$1$WfTzPgHlEIyVB#BQS2AgX#TUH0tJHdq3dg$6Bken7nsrtwP1gkRUDL" +
-		"9kHHdYMqxol5mFQm3xO9VMQAOULPPjrGOzhYVq92ko8cARg9MkZpKQfufwMLlO1xTejKtMR" +
-		"CsoINg85NbUBsYTQxN3sGfQejNQfnTTgHAhbETi3Pwz8CyzHQvSm$MUx#nj#hxZ26rOruxg" +
-		"e7xO7wk4rUYFlKzzpqGaCT2Ui2Min52DjETjBUqkqcvBpFeHJTDeJTTSdasiqZRRQ1iqJwK" +
-		"QeoayUIvg5RDOfUUqoFPJKweZDbvRTGKzLMO5gwkMrcex#hTLHzz1gQRluJTqCxkTc2xggT" +
-		"xm7ctMO0tN0ngb2Hfhgx3ZDL6JDLKpRBMjiHTiY#QeJ0jKPkkrKC$WbzbsR2dOhvqwm7DOB" +
-		"r5wLGTrZ9EIoRSLCCl6dCiYTbyppbi#Ex0XUp311NpVwVLvxBPRqEl4z92PNySg9tPc0ISr" +
-		"lRw0zuihNSzHwfsZnESNy8noSwZCBNAnEyS19w9IMZbnikzCqm9EqjboF$V#GLgxGj#k4df" +
-		"o7P9zZURyLk94L42vY3DMn#kHaeqISiOgAekOAzbHjVaMapt4o$b4zOwjSoDEVkgOtS#CrD" +
-		"fvBV0YRWN7MmRibOxk$TfmSgEe3ZuwQb$CwInqxnefEIZzp#cX4#SuuEujvbmFvaRDuOvCt" +
-		"Bg5diMj5VLHh04QoCwyZttGXzsPnQafmTxFYhHZToQY4pQR5Ud2dPeeLQUSxMn5df4Wsptv" +
-		"hbpHzTx2sHpUCk88kQph5TnZMSxMP3Lkm$R09YEIw4baw5RY7g8ZlpFd9SlL3U443#ERYTG" +
-		"Hh58nO#ImIhdk1DPY5b5Ko2n2MbG3kMvaiIQ5hbKXwtErEv#vt7SjA4TFZlEZcTKWvYeGSN" +
-		"tM9dGzHTz9NSUTE4SXdEDgGhV20VE8b69#0mB$v8BRNMHKc#2gRYR79yfzBW5DmGDIK0lU2" +
-		"LU5FuAl1VD0RHyx7nzmLofO46dbWRfyp3Au0IZpskLWUEIRsV#WRc0s6Eth6tbk0ef0Krzk" +
-		"2PRuyIU1ilB7rApppAKLPjpvvXgBRPFItnTUkzbpkvIuPg0vc0MwWvc8H#2Le2UOGla4MEd" +
-		"xUWFKG#y5Lla##e0vE1$2gttSn$WTOtCQ2qf1Fx3EQ$qzhmTplJy0h0MRV7aZvdDui2zlzh" +
-		"pLyt8m36nF6IlwxWU1NM0to0PRm1wm0um6Uy4OFz$Gjpi0He8NmJvVrydNJRZ0UZyCdiJfw" +
-		"ik7m3Jl7mRJlHzzxoNUFnBhuwZdOvudOw9tE1wBUytpwvxtOqR19sDnRuBPtdyBd3fRfzhi" +
-		"tO$1E$YRmOXotgb6nCISyFpU#TxVnxD$#3LLS7TIeysxAMFE00kelmFuTJgpjltzztwlryU" +
-		"dz9kTZ2zdp5xbwOpxFdLLBZJVb7bDI$5xnEfcdVM3Ak0oq9l2F3$E9pvkaIz$bT8syBmcHT" +
-		"lWkMAATcavxnMX0cPXYbOzfKsUrtBAUP#QAVuM7rUIeXq$jytPVlWiZVLtqCSCzrpVysJFK" +
-		"rDYJte#7H#Zd9XJde#br9sEnNvwdZwIP$#65EspSkAIP#d15EtBS#E2UUSPvtXaR9gjKDh7" +
-		"EE$s43XaX#su7RDNxQXnRzexqIy2##03xF$jLzXVWp$Rl#qh#vVzn$vh$tHr$m2$iI$iR$P" +
-		"N#zp#GkdlzgNzrZwpFza7zhxzqJwrFzWddD6FxFVsE$iGzJrx6tkQs5$2lx1txKrxmqv5$Q" +
-		"7zBC5uhpaRZNB2r$tSNdVybfsqARRSbhdIOi2TPIliMT$oES$Fs0ARP$EjrFVpk2rKkH$R1" +
-		"DPv$sLx1RkDTzrdUssFxRPTjjFFu2Ld3pfxm5bkMDjiJzbIUzGUiUasm$TIPZFjQPjjZzai" +
-		"c#ErHJRNfZfldBCJC5DS$X7bRn6tvSYqTPccG43k4OB0vKr9$zOOMZbaa6S53gqzUbq03Uc" +
-		"$8To0FXlGDien6y6DoPBweFN1xutM6sv2kGbSG5rBXz1bPqNK5#4da47EaaN#dkKo#3YkTy" +
-		"Xm#L0nV2FzT85l0ktGejopEVqqnu#Z3NDj0tUWpM3ymVX3YEyBzwLD2Le9$Y3yzc0evQ4kP" +
-		"yuWKnG8#2#GINuOaZjcyBz28237v9w4oGz0GDOS8IIR5WZu1v95LfT9jfP9bfX9NXo0a4nO" +
-		"8E2$HqZk6u2GR5SW81yDoPm344Rv6mZ8HqF#1$6RYZ$G8NIvLZVyqOnn5tFg3aQ1pjID#Hh" +
-		"63$4J");
+		"U9o5bmTyriKPnv$$$ysWDDH2sieI2qL5YbNP24eLYy7142mY8Z9Z22j0CCCWI80mPI$P43Q" +
+		"8Y8Zi9NilWooXRbkqhMsrjNtwlNiloJzl0hxt#TtlkUUU6$#xv#vzJiIxBeta0Nb1ikHdyW" +
+		"lvfVnARfNoKaP#9rSaXFwn8lfkqb2gIXrfRrlLaaSaGLh8u$A4F2bFONsoYFLBQ7vRH9ECv" +
+		"a8HpG0q5ujeqegDEWxDmn8Vq0H7$QEqamgoWfarPsRLa7f8BvaW$QIb$47MoGPP8slbpO2q" +
+		"0llmTzokyyFsEWVxGejcyliYzesbYJme3ybUgIaPUemyLd835lT9Kwb1NbCwodpoUwMUD71" +
+		"vPVJLfGfvM$cD$5nkYQYzK#wWDd#4yBpkTzpQyVFCU9xCaLPctVMq$S8Ap3XSsnFPQ6BGZ9" +
+		"HNh5ofeBQFu$u5NpqOwOYrcexL#8BUXii#YQ9zkjLa5lGmLQBbVNbLJjXT7#6qRqadcIYTQ" +
+		"Tz6biigMOtF39CzCb3UjgNIibbU1n$Aqx9G5k0hXyINMjfBNv8EygnijLQbv1rDaasiGtKv" +
+		"o3hiaBgoKjwJE73CMfoHFCjnibtkOfKhsrJ5fihunMcfeaUrcvtRe#ouuNoyA4FO4IDL2#f" +
+		"rkBx6rxucetIAJhJQsJ9B5aiNMQmpv0sTZb$aqliOrgcAzfJzCbPca8pb4dcNz1FvgMpKfL" +
+		"AEL1Q$gCYAtoPtow$b7ZcCN4bgItrvHa$f4NbEkaftIPL4IPBUqbTIP12bb#M039LJaYqvU" +
+		"EjecQolwtYPB9DaYaoJcJ9N9#badIsBP9iirJTqcgn7sYRBPAVibYsoI#VPybavBkT8k#G3" +
+		"EK$vaXoLo$AHY5pb14SnYwxic9bvleyru5HsHbykGb#RNQsBLvfMBTZZQlXhTRppJjQzljt" +
+		"te7LzLZPICwQOvhvYciXHwpDkK1CSDHDlz4ZXcJL7AiNArs3jpSalmorn2oUgR40gjAvdPM" +
+		"CVZNsXHHA#7RI$3J#wdNqhZzmQMuzpb12mYBCtJHpwU6uQpzr2uJmMVJCyFOxq6EUbVqHj8" +
+		"dTWwO8HykSLoHv#C0o$CUiURMViCUF2MgFfWiPujv4R16eBhGgbfjQgFLQT2dfxXdlIj6zb" +
+		"DSy5UdYHUwax9zACdbgWROb$zg1z7sx2Xpcx3RWrsk2xuL86Oum2p$A$CO0JNvKxumLy9WQ" +
+		"lIyR7mrOU9py6nB96erc75DQeextBddSMQOuhSBkOLOwrgRHDiSmb1uxcx9cvcHqtd8#U$1" +
+		"l5Mwbv4RrFCbyx28wn6dFMVMu2dxxYx0udq7isyo$DV4SokhbHZ6KxspgMzOaX6RarVj60v" +
+		"F4DjU0EjXHDATgcbjnwCPpskybhOb#H5Qv4NXxvVZk36jOFJNyUUr8EdKSxtwQsThTCF$TQ" +
+		"grjPOvF7svB7#lgMursxfjJ1gkGYruQIgUfLg2ne9kBLXgV1ZS13O2gO11eRMtvTmkpDTJp" +
+		"FwTCDbmH#cy0AR9k09KvN7ZdJZVzVQBhJfpfUwdYM6wUDuwT1Mz3UbRk0PSusr$7o6ytbPk" +
+		"3NqFNP0yJ$kBsN6D7#3BeLhcubcLcxLQ2JqoK5siu2sO6sfoYlSNLzmJY42$0wLyyUUUD12" +
+		"jZex0Q2#GZVkl82nwbW4SBt9Snv0iW5QM2hqwKxtWvcEpa3R06xNNa7m6UydQwyn$4#n##2" +
+		"8U10OAn380iS1aTGcFhzu2Wu1eQ3us24in$Z#0JOXT3LbKVUP0#cWAK8YQvy5inmyZamqyb" +
+		"xoTASVD3nISVd0$rTZEZ$akFBZjadxXhnhaJONNLypV5fiedmnn5sduBFdVmb#AgmJl8u2s" +
+		"lXFM0zo2xXUnynZDqHroR1wTtvaCebhPEpwKss0UuJ6BD5GAuA#ZcvWsiJvxYR6$UCAwSu$" +
+		"nlaxAS5nl4SzxhHN6u6sbLqVN8NUVVyk7tuZiW7S$maelvuy1lupGtKRKPVAj0sBr2tskc#" +
+		"3jH$v#gs1EnsECx$xcHNtkkuTEISwMUXMLl4TO7llYlGvsAdAzQMNtn0TdUVbnBGNIpU9hm" +
+		"dhhvTH7$vPphByQEEfxXwvzDoFRBVG1#VEVuYqfRVDn6sFpW#vyR9kL6$WJRvTrNhm3ULAS" +
+		"4kBx9FvBB5xSBtT0djhvbC##fOAVBJPD1TD#XwVLlVGNvBj#XcVKytAJUV7ZB$OUpgPVB$Q" +
+		"Hxv1VsBVgL$rkl8N#g$zJlzNl#ZF#Y$hCq$mKNm3$rMB#aN#hd#NV#cVzLlz6izfv$ff$g1" +
+		"djVBUbO$qO$rJtfDh#f7UaK$H7T63#X1syl9WjaTHtzOJ#XktQdRTOVLlMzihBJDvgR5rh1" +
+		"Ez#iktUFaVRfNDsfl7QsZR7aOo0PZTPnhFy7n6CtKTCtGLrnlGpLBIlpfJ33LoNFv#bnTee" +
+		"jraIxK1MxKbJPVRlDbDb#XQtMrhj4taLVfEl9PEa97Qehsq$uwmFKsH0TgZWxMGPggBplTg" +
+		"vgcVQpKm#Q9P7E8idmGijo2sAS5t96QZZOMyu7XK87yH0GIBNmYS04UiQTFZEbpAtaMpHsU" +
+		"kWdgqhOkN8TsTHWh2Ja9kHVwNiZra9y4ZSIycyM#LhAmIuQJqPiRkpTo9d9BOBwo3#K7iAb" +
+		"FcrPW279VT7sfDz$V0xadt1DkJ5qJeiC7GKFAaUXduVFk4E3ncZ8Hgq#axG7V$DC14pVwH9" +
+		"O#iNOKiNU8Y3j4N6xYyn0Hk0#yOaYWRGBSZZRu5F28f4F4#nxmYVe5cBUBYMDzOcm17h5tY" +
+		"DXRWCTx8eeusoSQ3$7s4E3n6YKoWBl1tU315Zvl404UhvHeukGeOjyeekqetY4UyCLuzoZa" +
+		"JiXfS1gSWou7UGHoEfmEZqOt6daaScVapiWP5Zvl7G4UBufetYiXNbKXtgmXudrVnlqVgdf" +
+		"khG==");
 
 	static final Action RETURN2 = new Action() {
 		public Symbol reduce(Symbol[] _symbols, int offset) {
@@ -155,186 +159,242 @@ public class OberonParser extends Parser {
 			Action.RETURN,	// [13] Operator = div
 			Action.RETURN,	// [14] Operator = mod
 			Action.RETURN,	// [15] Operator = amp
-			new Action() {	// [16] Term = Factor
+			new Action() {	// [16] lst$FactorRepeat = FactorRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
 				}
 			},
-			new Action() {	// [17] Term = Term Operator Factor
-				public Symbol reduce(Symbol[] _symbols, int offset) {
-					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 3]); return _symbols[offset + 1];
-				}
-			},
-			Action.RETURN,	// [18] PlusMinOperator = plus
-			Action.RETURN,	// [19] PlusMinOperator = minus
-			Action.RETURN,	// [20] ExpressionOperator = PlusMinOperator
-			Action.RETURN,	// [21] ExpressionOperator = or
-			Action.RETURN,	// [22] LogicalOperator = eq
-			Action.RETURN,	// [23] LogicalOperator = hash
-			Action.RETURN,	// [24] LogicalOperator = st
-			Action.RETURN,	// [25] LogicalOperator = seq
-			Action.RETURN,	// [26] LogicalOperator = gt
-			Action.RETURN,	// [27] LogicalOperator = geq
-			Action.RETURN,	// [28] LogicalOperator = pipe
-			Action.NONE,  	// [29] opt$PlusMinOperator = 
-			Action.RETURN,	// [30] opt$PlusMinOperator = PlusMinOperator
-			RETURN2,	// [31] SimpleExpression = opt$PlusMinOperator Term; returns 'Term' although none is marked
-			RETURN3,	// [32] SimpleExpression = SimpleExpression ExpressionOperator Term; returns 'Term' although none is marked
-			Action.RETURN,	// [33] Expression = SimpleExpression
-			RETURN3,	// [34] Expression = SimpleExpression LogicalOperator SimpleExpression; returns 'SimpleExpression' although none is marked
-			RETURN4,	// [35] Assignment = identifier Selector assign Expression; returns 'Expression' although none is marked
-			RETURN2,	// [36] ActualParameters = par_open par_close; returns 'par_close' although none is marked
-			RETURN3,	// [37] ActualParameters = par_open CommaSeparatedExpressions par_close; returns 'par_close' although none is marked
-			new Action() {	// [38] CommaSeparatedExpressions = Expression
-				public Symbol reduce(Symbol[] _symbols, int offset) {
-					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
-				}
-			},
-			new Action() {	// [39] CommaSeparatedExpressions = CommaSeparatedExpressions comma Expression
-				public Symbol reduce(Symbol[] _symbols, int offset) {
-					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 3]); return _symbols[offset + 1];
-				}
-			},
-			RETURN2,	// [40] ProcedureCall = identifier Selector; returns 'Selector' although none is marked
-			RETURN3,	// [41] ProcedureCall = identifier Selector ActualParameters; returns 'ActualParameters' although none is marked
-			RETURN4,	// [42] IfStatementStart = if_ Expression then StatementSequence; returns 'StatementSequence' although none is marked
-			RETURN4,	// [43] ElseIfStatement = else_if Expression then StatementSequence; returns 'StatementSequence' although none is marked
-			RETURN2,	// [44] ElseIfStatement = ElseIfStatement ElseIfStatement; returns 'ElseIfStatement' although none is marked
-			RETURN3,	// [45] ElseStatement = else_ StatementSequence end; returns 'end' although none is marked
-			Action.RETURN,	// [46] IfStatement = IfStatementStart
-			RETURN2,	// [47] IfStatement = IfStatementStart ElseIfStatement; returns 'ElseIfStatement' although none is marked
-			RETURN2,	// [48] IfStatement = IfStatementStart ElseStatement; returns 'ElseStatement' although none is marked
-			RETURN3,	// [49] IfStatement = IfStatementStart ElseIfStatement ElseStatement; returns 'ElseStatement' although none is marked
-			RETURN5,	// [50] WhileStatement = while_ Expression do_ StatementSequence end; returns 'end' although none is marked
-			RETURN5,	// [51] RepeatStatement = repeat StatementSequence until Expression semicolon; returns 'semicolon' although none is marked
-			Action.RETURN,	// [52] Statement = Assignment
-			Action.RETURN,	// [53] Statement = ProcedureCall
-			Action.RETURN,	// [54] Statement = IfStatement
-			Action.RETURN,	// [55] Statement = WhileStatement
-			Action.RETURN,	// [56] Statement = RepeatStatement
-			Action.RETURN,	// [57] StatementSequence = Statement
-			RETURN3,	// [58] StatementSequence = StatementSequence semicolon StatementSequence; returns 'StatementSequence' although none is marked
-			Action.RETURN,	// [59] IdentifierList = identifier
-			RETURN3,	// [60] IdentifierList = IdentifierList comma IdentifierList; returns 'IdentifierList' although none is marked
-			RETURN4,	// [61] ArrayType = array Expression of Type; returns 'Type' although none is marked
-			RETURN3,	// [62] FieldList = IdentifierList colon Type; returns 'Type' although none is marked
-			RETURN3,	// [63] RecordType = record RecordTypeInner end; returns 'end' although none is marked
-			Action.RETURN,	// [64] RecordTypeInner = FieldList
-			RETURN3,	// [65] RecordTypeInner = RecordTypeInner semicolon RecordTypeInner; returns 'RecordTypeInner' although none is marked
-			RETURN2,	// [66] Type = identifier opt$lst$Selector; returns 'opt$lst$Selector' although none is marked
-			Action.RETURN,	// [67] Type = ArrayType
-			Action.RETURN,	// [68] Type = RecordType
-			Action.RETURN,	// [69] Type = integer
-			Action.RETURN,	// [70] Type = long_
-			Action.RETURN,	// [71] Type = char_
-			Action.NONE,  	// [72] opt$var = 
-			Action.RETURN,	// [73] opt$var = var
-			RETURN4,	// [74] FPSection = opt$var IdentifierList colon Type; returns 'Type' although none is marked
-			Action.NONE,  	// [75] opt$FormalParametersInner = 
-			Action.RETURN,	// [76] opt$FormalParametersInner = FormalParametersInner
-			RETURN3,	// [77] FormalParameters = par_open opt$FormalParametersInner par_close; returns 'par_close' although none is marked
-			new Action() {	// [78] lst$FPSectionRepeat = FPSectionRepeat
-				public Symbol reduce(Symbol[] _symbols, int offset) {
-					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
-				}
-			},
-			new Action() {	// [79] lst$FPSectionRepeat = lst$FPSectionRepeat FPSectionRepeat
+			new Action() {	// [17] lst$FactorRepeat = lst$FactorRepeat FactorRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
 				}
 			},
-			Action.NONE,  	// [80] opt$lst$FPSectionRepeat = 
-			Action.RETURN,	// [81] opt$lst$FPSectionRepeat = lst$FPSectionRepeat
-			RETURN2,	// [82] FormalParametersInner = FPSection opt$lst$FPSectionRepeat; returns 'opt$lst$FPSectionRepeat' although none is marked
-			RETURN2,	// [83] FPSectionRepeat = semicolon FPSection; returns 'FPSection' although none is marked
-			Action.NONE,  	// [84] opt$FormalParameters = 
-			Action.RETURN,	// [85] opt$FormalParameters = FormalParameters
-			RETURN3,	// [86] ProcedureHeading = procedure identifier opt$FormalParameters; returns 'opt$FormalParameters' although none is marked
-			Action.NONE,  	// [87] opt$ProcedureBodyOptional = 
-			Action.RETURN,	// [88] opt$ProcedureBodyOptional = ProcedureBodyOptional
-			RETURN4,	// [89] ProcedureBody = Declarations opt$ProcedureBodyOptional end identifier; returns 'identifier' although none is marked
-			RETURN2,	// [90] ProcedureBodyOptional = begin StatementSequence; returns 'StatementSequence' although none is marked
-			RETURN3,	// [91] ProcedureDeclaration = ProcedureHeading semicolon ProcedureBody; returns 'ProcedureBody' although none is marked
-			Action.NONE,  	// [92] opt$ConstDeclaration = 
-			Action.RETURN,	// [93] opt$ConstDeclaration = ConstDeclaration
-			Action.NONE,  	// [94] opt$TypeDeclaration = 
-			Action.RETURN,	// [95] opt$TypeDeclaration = TypeDeclaration
-			Action.NONE,  	// [96] opt$VarDeclaration = 
-			Action.RETURN,	// [97] opt$VarDeclaration = VarDeclaration
-			new Action() {	// [98] lst$ProcedureDeclaration = ProcedureDeclaration
+			Action.NONE,  	// [18] opt$lst$FactorRepeat = 
+			Action.RETURN,	// [19] opt$lst$FactorRepeat = lst$FactorRepeat
+			RETURN2,	// [20] Term = Factor opt$lst$FactorRepeat; returns 'opt$lst$FactorRepeat' although none is marked
+			RETURN2,	// [21] FactorRepeat = Operator Factor; returns 'Factor' although none is marked
+			Action.RETURN,	// [22] PlusMinOperator = plus
+			Action.RETURN,	// [23] PlusMinOperator = minus
+			Action.RETURN,	// [24] ExpressionOperator = PlusMinOperator
+			Action.RETURN,	// [25] ExpressionOperator = or
+			Action.RETURN,	// [26] LogicalOperator = eq
+			Action.RETURN,	// [27] LogicalOperator = hash
+			Action.RETURN,	// [28] LogicalOperator = st
+			Action.RETURN,	// [29] LogicalOperator = seq
+			Action.RETURN,	// [30] LogicalOperator = gt
+			Action.RETURN,	// [31] LogicalOperator = geq
+			Action.RETURN,	// [32] LogicalOperator = pipe
+			Action.NONE,  	// [33] opt$PlusMinOperator = 
+			Action.RETURN,	// [34] opt$PlusMinOperator = PlusMinOperator
+			RETURN2,	// [35] SimpleExpression = opt$PlusMinOperator Term; returns 'Term' although none is marked
+			RETURN3,	// [36] SimpleExpression = SimpleExpression ExpressionOperator Term; returns 'Term' although none is marked
+			new Action() {	// [37] lst$SimpleExpressionRepeat = SimpleExpressionRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
 				}
 			},
-			new Action() {	// [99] lst$ProcedureDeclaration = lst$ProcedureDeclaration ProcedureDeclaration
+			new Action() {	// [38] lst$SimpleExpressionRepeat = lst$SimpleExpressionRepeat SimpleExpressionRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
 				}
 			},
-			Action.NONE,  	// [100] opt$lst$ProcedureDeclaration = 
-			Action.RETURN,	// [101] opt$lst$ProcedureDeclaration = lst$ProcedureDeclaration
-			RETURN5,	// [102] Declarations = opt$ConstDeclaration opt$TypeDeclaration opt$VarDeclaration opt$lst$ProcedureDeclaration semicolon; returns 'semicolon' although none is marked
-			RETURN4,	// [103] ConstDeclarationPart = identifier eq Expression semicolon; returns 'semicolon' although none is marked
-			RETURN4,	// [104] TypeDeclarationPart = identifier eq Type semicolon; returns 'semicolon' although none is marked
-			RETURN4,	// [105] VarDeclarationPart = IdentifierList colon Type semicolon; returns 'semicolon' although none is marked
-			new Action() {	// [106] lst$ConstDeclarationPart = ConstDeclarationPart
+			Action.NONE,  	// [39] opt$lst$SimpleExpressionRepeat = 
+			Action.RETURN,	// [40] opt$lst$SimpleExpressionRepeat = lst$SimpleExpressionRepeat
+			RETURN2,	// [41] Expression = SimpleExpression opt$lst$SimpleExpressionRepeat; returns 'opt$lst$SimpleExpressionRepeat' although none is marked
+			RETURN2,	// [42] SimpleExpressionRepeat = LogicalOperator SimpleExpression; returns 'SimpleExpression' although none is marked
+			RETURN4,	// [43] Assignment = identifier Selector assign Expression; returns 'Expression' although none is marked
+			Action.NONE,  	// [44] opt$CommaSeparatedExpressions = 
+			Action.RETURN,	// [45] opt$CommaSeparatedExpressions = CommaSeparatedExpressions
+			RETURN3,	// [46] ActualParameters = par_open opt$CommaSeparatedExpressions par_close; returns 'par_close' although none is marked
+			new Action() {	// [47] lst$ExpressionRepeat = ExpressionRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
 				}
 			},
-			new Action() {	// [107] lst$ConstDeclarationPart = lst$ConstDeclarationPart ConstDeclarationPart
+			new Action() {	// [48] lst$ExpressionRepeat = lst$ExpressionRepeat ExpressionRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
 				}
 			},
-			Action.NONE,  	// [108] opt$lst$ConstDeclarationPart = 
-			Action.RETURN,	// [109] opt$lst$ConstDeclarationPart = lst$ConstDeclarationPart
-			RETURN2,	// [110] ConstDeclaration = const_ opt$lst$ConstDeclarationPart; returns 'opt$lst$ConstDeclarationPart' although none is marked
-			new Action() {	// [111] lst$TypeDeclarationPart = TypeDeclarationPart
+			Action.NONE,  	// [49] opt$lst$ExpressionRepeat = 
+			Action.RETURN,	// [50] opt$lst$ExpressionRepeat = lst$ExpressionRepeat
+			RETURN2,	// [51] CommaSeparatedExpressions = Expression opt$lst$ExpressionRepeat; returns 'opt$lst$ExpressionRepeat' although none is marked
+			RETURN2,	// [52] ExpressionRepeat = comma Expression; returns 'Expression' although none is marked
+			Action.NONE,  	// [53] opt$ActualParameters = 
+			Action.RETURN,	// [54] opt$ActualParameters = ActualParameters
+			RETURN3,	// [55] ProcedureCall = identifier Selector opt$ActualParameters; returns 'opt$ActualParameters' although none is marked
+			RETURN4,	// [56] IfStatementStart = if_ Expression then StatementSequence; returns 'StatementSequence' although none is marked
+			RETURN4,	// [57] ElseIfStatement = else_if Expression then StatementSequence; returns 'StatementSequence' although none is marked
+			RETURN3,	// [58] ElseStatement = else_ StatementSequence end; returns 'end' although none is marked
+			new Action() {	// [59] lst$ElseIfStatement = ElseIfStatement
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
 				}
 			},
-			new Action() {	// [112] lst$TypeDeclarationPart = lst$TypeDeclarationPart TypeDeclarationPart
+			new Action() {	// [60] lst$ElseIfStatement = lst$ElseIfStatement ElseIfStatement
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
 				}
 			},
-			Action.NONE,  	// [113] opt$lst$TypeDeclarationPart = 
-			Action.RETURN,	// [114] opt$lst$TypeDeclarationPart = lst$TypeDeclarationPart
-			RETURN2,	// [115] TypeDeclaration = type_dec opt$lst$TypeDeclarationPart; returns 'opt$lst$TypeDeclarationPart' although none is marked
-			new Action() {	// [116] lst$VarDeclarationPart = VarDeclarationPart
+			Action.NONE,  	// [61] opt$lst$ElseIfStatement = 
+			Action.RETURN,	// [62] opt$lst$ElseIfStatement = lst$ElseIfStatement
+			Action.NONE,  	// [63] opt$ElseStatement = 
+			Action.RETURN,	// [64] opt$ElseStatement = ElseStatement
+			RETURN3,	// [65] IfStatement = IfStatementStart opt$lst$ElseIfStatement opt$ElseStatement; returns 'opt$ElseStatement' although none is marked
+			RETURN5,	// [66] WhileStatement = while_ Expression do_ StatementSequence end; returns 'end' although none is marked
+			RETURN5,	// [67] RepeatStatement = repeat StatementSequence until Expression semicolon; returns 'semicolon' although none is marked
+			Action.RETURN,	// [68] Statement = Assignment
+			Action.RETURN,	// [69] Statement = ProcedureCall
+			Action.RETURN,	// [70] Statement = IfStatement
+			Action.RETURN,	// [71] Statement = WhileStatement
+			Action.RETURN,	// [72] Statement = RepeatStatement
+			new Action() {	// [73] lst$StatementRepeat = StatementRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
 				}
 			},
-			new Action() {	// [117] lst$VarDeclarationPart = lst$VarDeclarationPart VarDeclarationPart
+			new Action() {	// [74] lst$StatementRepeat = lst$StatementRepeat StatementRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
 				}
 			},
-			Action.NONE,  	// [118] opt$lst$VarDeclarationPart = 
-			Action.RETURN,	// [119] opt$lst$VarDeclarationPart = lst$VarDeclarationPart
-			RETURN2,	// [120] VarDeclaration = var opt$lst$VarDeclarationPart; returns 'opt$lst$VarDeclarationPart' although none is marked
-			Action.NONE,  	// [121] opt$ImportStatement = 
-			Action.RETURN,	// [122] opt$ImportStatement = ImportStatement
-			new Action() {	// [123] lst$ModuleBegin = ModuleBegin
+			Action.NONE,  	// [75] opt$lst$StatementRepeat = 
+			Action.RETURN,	// [76] opt$lst$StatementRepeat = lst$StatementRepeat
+			RETURN2,	// [77] StatementSequence = Statement opt$lst$StatementRepeat; returns 'opt$lst$StatementRepeat' although none is marked
+			RETURN2,	// [78] StatementRepeat = semicolon Statement; returns 'Statement' although none is marked
+			new Action() {	// [79] lst$IdentifierRepeat = IdentifierRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
 				}
 			},
-			new Action() {	// [124] lst$ModuleBegin = lst$ModuleBegin ModuleBegin
+			new Action() {	// [80] lst$IdentifierRepeat = lst$IdentifierRepeat IdentifierRepeat
 				public Symbol reduce(Symbol[] _symbols, int offset) {
 					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
 				}
 			},
-			Action.NONE,  	// [125] opt$lst$ModuleBegin = 
-			Action.RETURN,	// [126] opt$lst$ModuleBegin = lst$ModuleBegin
-			RETURN5,	// [127] Module = ModuleStart opt$ImportStatement Declarations opt$lst$ModuleBegin ModuleEnd; returns 'ModuleEnd' although none is marked
-			RETURN3,	// [128] ModuleStart = module identifier semicolon; returns 'semicolon' although none is marked
-			RETURN3,	// [129] ModuleEnd = end identifier dot; returns 'dot' although none is marked
-			RETURN3,	// [130] ImportStatement = import_ IdentifierList semicolon; returns 'semicolon' although none is marked
-			RETURN2	// [131] ModuleBegin = begin StatementSequence; returns 'StatementSequence' although none is marked
+			Action.NONE,  	// [81] opt$lst$IdentifierRepeat = 
+			Action.RETURN,	// [82] opt$lst$IdentifierRepeat = lst$IdentifierRepeat
+			RETURN2,	// [83] IdentifierList = identifier opt$lst$IdentifierRepeat; returns 'opt$lst$IdentifierRepeat' although none is marked
+			RETURN2,	// [84] IdentifierRepeat = comma identifier; returns 'identifier' although none is marked
+			RETURN4,	// [85] ArrayType = array Expression of Type; returns 'Type' although none is marked
+			RETURN3,	// [86] FieldList = IdentifierList colon Type; returns 'Type' although none is marked
+			RETURN3,	// [87] RecordType = record RecordTypeInner end; returns 'end' although none is marked
+			Action.RETURN,	// [88] RecordTypeInner = FieldList
+			RETURN3,	// [89] RecordTypeInner = RecordTypeInner semicolon RecordTypeInner; returns 'RecordTypeInner' although none is marked
+			RETURN2,	// [90] Type = identifier opt$lst$Selector; returns 'opt$lst$Selector' although none is marked
+			Action.RETURN,	// [91] Type = ArrayType
+			Action.RETURN,	// [92] Type = RecordType
+			Action.RETURN,	// [93] Type = integer
+			Action.RETURN,	// [94] Type = long_
+			Action.RETURN,	// [95] Type = char_
+			Action.NONE,  	// [96] opt$var = 
+			Action.RETURN,	// [97] opt$var = var
+			RETURN4,	// [98] FPSection = opt$var IdentifierList colon Type; returns 'Type' although none is marked
+			Action.NONE,  	// [99] opt$FormalParametersInner = 
+			Action.RETURN,	// [100] opt$FormalParametersInner = FormalParametersInner
+			RETURN3,	// [101] FormalParameters = par_open opt$FormalParametersInner par_close; returns 'par_close' although none is marked
+			new Action() {	// [102] lst$FPSectionRepeat = FPSectionRepeat
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+				}
+			},
+			new Action() {	// [103] lst$FPSectionRepeat = lst$FPSectionRepeat FPSectionRepeat
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
+				}
+			},
+			Action.NONE,  	// [104] opt$lst$FPSectionRepeat = 
+			Action.RETURN,	// [105] opt$lst$FPSectionRepeat = lst$FPSectionRepeat
+			RETURN2,	// [106] FormalParametersInner = FPSection opt$lst$FPSectionRepeat; returns 'opt$lst$FPSectionRepeat' although none is marked
+			RETURN2,	// [107] FPSectionRepeat = semicolon FPSection; returns 'FPSection' although none is marked
+			Action.NONE,  	// [108] opt$FormalParameters = 
+			Action.RETURN,	// [109] opt$FormalParameters = FormalParameters
+			RETURN3,	// [110] ProcedureHeading = procedure identifier opt$FormalParameters; returns 'opt$FormalParameters' although none is marked
+			Action.NONE,  	// [111] opt$ProcedureBodyOptional = 
+			Action.RETURN,	// [112] opt$ProcedureBodyOptional = ProcedureBodyOptional
+			RETURN4,	// [113] ProcedureBody = Declarations opt$ProcedureBodyOptional end identifier; returns 'identifier' although none is marked
+			RETURN2,	// [114] ProcedureBodyOptional = begin StatementSequence; returns 'StatementSequence' although none is marked
+			RETURN3,	// [115] ProcedureDeclaration = ProcedureHeading semicolon ProcedureBody; returns 'ProcedureBody' although none is marked
+			Action.NONE,  	// [116] opt$ConstDeclaration = 
+			Action.RETURN,	// [117] opt$ConstDeclaration = ConstDeclaration
+			Action.NONE,  	// [118] opt$TypeDeclaration = 
+			Action.RETURN,	// [119] opt$TypeDeclaration = TypeDeclaration
+			Action.NONE,  	// [120] opt$VarDeclaration = 
+			Action.RETURN,	// [121] opt$VarDeclaration = VarDeclaration
+			new Action() {	// [122] lst$ProcedureDeclaration = ProcedureDeclaration
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+				}
+			},
+			new Action() {	// [123] lst$ProcedureDeclaration = lst$ProcedureDeclaration ProcedureDeclaration
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
+				}
+			},
+			Action.NONE,  	// [124] opt$lst$ProcedureDeclaration = 
+			Action.RETURN,	// [125] opt$lst$ProcedureDeclaration = lst$ProcedureDeclaration
+			RETURN5,	// [126] Declarations = opt$ConstDeclaration opt$TypeDeclaration opt$VarDeclaration opt$lst$ProcedureDeclaration semicolon; returns 'semicolon' although none is marked
+			RETURN4,	// [127] ConstDeclarationPart = identifier eq Expression semicolon; returns 'semicolon' although none is marked
+			RETURN4,	// [128] TypeDeclarationPart = identifier eq Type semicolon; returns 'semicolon' although none is marked
+			RETURN4,	// [129] VarDeclarationPart = IdentifierList colon Type semicolon; returns 'semicolon' although none is marked
+			new Action() {	// [130] lst$ConstDeclarationPart = ConstDeclarationPart
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+				}
+			},
+			new Action() {	// [131] lst$ConstDeclarationPart = lst$ConstDeclarationPart ConstDeclarationPart
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
+				}
+			},
+			Action.NONE,  	// [132] opt$lst$ConstDeclarationPart = 
+			Action.RETURN,	// [133] opt$lst$ConstDeclarationPart = lst$ConstDeclarationPart
+			RETURN2,	// [134] ConstDeclaration = const_ opt$lst$ConstDeclarationPart; returns 'opt$lst$ConstDeclarationPart' although none is marked
+			new Action() {	// [135] lst$TypeDeclarationPart = TypeDeclarationPart
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+				}
+			},
+			new Action() {	// [136] lst$TypeDeclarationPart = lst$TypeDeclarationPart TypeDeclarationPart
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
+				}
+			},
+			Action.NONE,  	// [137] opt$lst$TypeDeclarationPart = 
+			Action.RETURN,	// [138] opt$lst$TypeDeclarationPart = lst$TypeDeclarationPart
+			RETURN2,	// [139] TypeDeclaration = type_dec opt$lst$TypeDeclarationPart; returns 'opt$lst$TypeDeclarationPart' although none is marked
+			new Action() {	// [140] lst$VarDeclarationPart = VarDeclarationPart
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+				}
+			},
+			new Action() {	// [141] lst$VarDeclarationPart = lst$VarDeclarationPart VarDeclarationPart
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
+				}
+			},
+			Action.NONE,  	// [142] opt$lst$VarDeclarationPart = 
+			Action.RETURN,	// [143] opt$lst$VarDeclarationPart = lst$VarDeclarationPart
+			RETURN2,	// [144] VarDeclaration = var opt$lst$VarDeclarationPart; returns 'opt$lst$VarDeclarationPart' although none is marked
+			Action.NONE,  	// [145] opt$ImportStatement = 
+			Action.RETURN,	// [146] opt$ImportStatement = ImportStatement
+			new Action() {	// [147] lst$ModuleBegin = ModuleBegin
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					ArrayList lst = new ArrayList(); lst.add(_symbols[offset + 1]); return new Symbol(lst);
+				}
+			},
+			new Action() {	// [148] lst$ModuleBegin = lst$ModuleBegin ModuleBegin
+				public Symbol reduce(Symbol[] _symbols, int offset) {
+					((ArrayList) _symbols[offset + 1].value).add(_symbols[offset + 2]); return _symbols[offset + 1];
+				}
+			},
+			Action.NONE,  	// [149] opt$lst$ModuleBegin = 
+			Action.RETURN,	// [150] opt$lst$ModuleBegin = lst$ModuleBegin
+			RETURN5,	// [151] Module = ModuleStart opt$ImportStatement Declarations opt$lst$ModuleBegin ModuleEnd; returns 'ModuleEnd' although none is marked
+			RETURN3,	// [152] ModuleStart = module identifier semicolon; returns 'semicolon' although none is marked
+			RETURN3,	// [153] ModuleEnd = end identifier dot; returns 'dot' although none is marked
+			RETURN3,	// [154] ImportStatement = import_ IdentifierList semicolon; returns 'semicolon' although none is marked
+			RETURN2	// [155] ModuleBegin = begin StatementSequence; returns 'StatementSequence' although none is marked
 		};
 	}
 

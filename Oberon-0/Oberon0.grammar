@@ -35,10 +35,9 @@ Operator =
     |   amp
     ;
 
-Term =
-        Factor
-    |   Term Operator Factor
-    ;
+Term = Factor FactorRepeat*;
+
+FactorRepeat = Operator Factor;
 
 PlusMinOperator =
         plus
@@ -65,43 +64,27 @@ SimpleExpression =
     |   SimpleExpression ExpressionOperator Term
     ;
 
-Expression =
-        SimpleExpression
-    |   SimpleExpression LogicalOperator SimpleExpression
-    ;
+Expression = SimpleExpression SimpleExpressionRepeat*;
+
+SimpleExpressionRepeat = LogicalOperator SimpleExpression;
 
 Assignment = identifier Selector assign Expression;
 
-ActualParameters =
-        par_open par_close
-    |   par_open CommaSeparatedExpressions par_close
-    ;
+ActualParameters = par_open CommaSeparatedExpressions? par_close;
 
-CommaSeparatedExpressions =
-        Expression
-    |   CommaSeparatedExpressions comma Expression
-    ;
+CommaSeparatedExpressions = Expression ExpressionRepeat*;
 
-ProcedureCall =
-        identifier Selector
-    |   identifier Selector ActualParameters
-    ;
+ExpressionRepeat = comma Expression;
+
+ProcedureCall = identifier Selector ActualParameters?;
 
 IfStatementStart = if_ Expression then StatementSequence;
 
-ElseIfStatement =
-        else_if Expression then StatementSequence
-    |   ElseIfStatement ElseIfStatement
-    ;
+ElseIfStatement = else_if Expression then StatementSequence;
 
 ElseStatement = else_ StatementSequence end;
 
-IfStatement =
-        IfStatementStart
-    |   IfStatementStart ElseIfStatement
-    |   IfStatementStart ElseStatement
-    |   IfStatementStart ElseIfStatement ElseStatement
-    ;
+IfStatement = IfStatementStart ElseIfStatement* ElseStatement?;
 
 WhileStatement = while_ Expression do_ StatementSequence end;
 
@@ -115,15 +98,13 @@ Statement =
     |   RepeatStatement
     ;
 
-StatementSequence =
-        Statement
-    |   StatementSequence semicolon StatementSequence
-    ;
+StatementSequence = Statement StatementRepeat*;
 
-IdentifierList =
-        identifier
-    |   IdentifierList comma IdentifierList
-    ;
+StatementRepeat = semicolon Statement;
+
+IdentifierList = identifier IdentifierRepeat*;
+
+IdentifierRepeat = comma identifier;
 
 ArrayType  = array Expression of Type;
 
