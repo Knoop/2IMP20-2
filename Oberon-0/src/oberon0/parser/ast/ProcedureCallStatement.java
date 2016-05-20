@@ -2,7 +2,7 @@ package oberon0.parser.ast;
 
 import java.util.List;
 
-public class ProcedureCallStatement extends LangCons {
+public class ProcedureCallStatement extends Statement {
 
     private Reference reference;
     private List<Expression> parameters;

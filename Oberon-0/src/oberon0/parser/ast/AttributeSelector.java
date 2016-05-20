@@ -1,7 +1,7 @@
 package oberon0.parser.ast;
 
 
-public class AttributeSelector extends LangCons {
+public class AttributeSelector extends Selector {
 
     private String identifier;
 
