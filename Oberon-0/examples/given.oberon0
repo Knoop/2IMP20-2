@@ -9,8 +9,8 @@ MODULE EBNF;
     sym: INTEGER;
     lastpos: LONGINT;
     id: Identifier;
-    R: Texts.Reader;
-    W: Texts.Writer;
+    R: Reader;
+    W: Writer;
 
   PROCEDURE error(n: INTEGER);
     VAR pos: LONGINT;
@@ -29,6 +29,7 @@ MODULE EBNF;
 	BEGIN
     WHILE ~R.eot & (ch <= " ") DO Texts.Read(R, ch) END ;
       END
+	  i := 0 # (-10 OR (+10 MOD 5 DIV 2 + (R[1])));
   END GetSym 
 
   PROCEDURE expression;
@@ -52,28 +53,6 @@ MODULE EBNF;
     BEGIN (*term*) factor;
       WHILE sym < bar DO factor END
     END term;
-    
-	BEGIN (*expression*) term;
-      WHILE sym = bar DO GetSym; term END
-    END expression;
-
-	PROCEDURE production;
-    BEGIN (*sym = ident*) GetSym;
-      IF sym = eql THEN GetSym ELSE error(7) END ;
-      expression;
-      IF sym = period THEN GetSym ELSE error(8) END
-    END production;
-
-	PROCEDURE syntax;
-    BEGIN
-      WHILE sym = ident DO production END
-    END syntax;
-
-	PROCEDURE Compile*;
-    BEGIN (*set R to the beginning of the text to be compiled*)
-      lastpos := 0; Texts.Read(R, ch); GetSym; syntax;
-      Texts.Append(Oberon.Log, W.buf)
-    END Compile;
 
 BEGIN Texts.OpenWriter(W)
 END EBNF
