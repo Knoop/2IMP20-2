@@ -258,17 +258,6 @@ class PicoJavaScanner extends Scanner {
    */
   private int zzFinalHighSurrogate = 0;
 
-  /* user code: */
-
-	private Symbol symbol(short id){
-		return new Symbol(id);
-	}
-	
-	private Symbol symbol(short id, String value){
-		return new Symbol(id, value);
-	}
-
-
 
   /**
    * Creates a new scanner
@@ -636,7 +625,7 @@ class PicoJavaScanner extends Scanner {
 
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
-          { 	return symbol(Terminals.EOF);
+          { 	return new Symbol(Terminals.EOF);
  }
       }
       else {
@@ -650,63 +639,63 @@ class PicoJavaScanner extends Scanner {
             }
           case 20: break;
           case 3: 
-            { return symbol(Terminals.IDENTIFIER, yytext());
+            { return new Symbol(Terminals.IDENTIFIER, yyline, yycolumn, yylength(), yytext());
             }
           case 21: break;
           case 4: 
-            { return symbol(Terminals.LPAREN);
+            { return new Symbol(Terminals.LPAREN, yyline, yycolumn, yylength());
             }
           case 22: break;
           case 5: 
-            { return symbol(Terminals.RPAREN);
+            { return new Symbol(Terminals.RPAREN, yyline, yycolumn, yylength());
             }
           case 23: break;
           case 6: 
-            { return symbol(Terminals.LBRACE);
+            { return new Symbol(Terminals.LBRACE, yyline, yycolumn, yylength());
             }
           case 24: break;
           case 7: 
-            { return symbol(Terminals.RBRACE);
+            { return new Symbol(Terminals.RBRACE, yyline, yycolumn, yylength());
             }
           case 25: break;
           case 8: 
-            { return symbol(Terminals.SEMICOLON);
+            { return new Symbol(Terminals.SEMICOLON, yyline, yycolumn, yylength());
             }
           case 26: break;
           case 9: 
-            { return symbol(Terminals.DOT);
+            { return new Symbol(Terminals.DOT, yyline, yycolumn, yylength());
             }
           case 27: break;
           case 10: 
-            { return symbol(Terminals.EQ);
+            { return new Symbol(Terminals.EQ, yyline, yycolumn, yylength());
             }
           case 28: break;
           case 11: 
-            { return symbol(Terminals.ANDAND);
+            { return new Symbol(Terminals.ANDAND, yyline, yycolumn, yylength());
             }
           case 29: break;
           case 12: 
-            { return symbol(Terminals.OROR);
+            { return new Symbol(Terminals.OROR, yyline, yycolumn, yylength());
             }
           case 30: break;
           case 13: 
-            { return symbol(Terminals.TRUE);
+            { return new Symbol(Terminals.TRUE, yyline, yycolumn, yylength());
             }
           case 31: break;
           case 14: 
-            { return symbol(Terminals.FALSE);
+            { return new Symbol(Terminals.FALSE, yyline, yycolumn, yylength());
             }
           case 32: break;
           case 15: 
-            { return symbol(Terminals.CLASS);
+            { return new Symbol(Terminals.CLASS, yyline, yycolumn, yylength());
             }
           case 33: break;
           case 16: 
-            { return symbol(Terminals.WHILE);
+            { return new Symbol(Terminals.WHILE, yyline, yycolumn, yylength());
             }
           case 34: break;
           case 17: 
-            { return symbol(Terminals.EXTENDS);
+            { return new Symbol(Terminals.EXTENDS, yyline, yycolumn, yylength());
             }
           case 35: break;
           case 18: 

@@ -14,23 +14,11 @@ import picojava.PicoJavaParser.Terminals;
 %type Symbol
 %yylexthrow Scanner.Exception
 %eofval{
-	return symbol(Terminals.EOF);
+	return new Symbol(Terminals.EOF);
 %eofval}
 %unicode
 %line
 %column
-
-%{
-
-	private Symbol symbol(short id){
-		return new Symbol(id);
-	}
-	
-	private Symbol symbol(short id, String value){
-		return new Symbol(id, value);
-	}
-
-%}
 
 /* Whitespace characters */
 EndOfLine = \n|\r|\r\n
@@ -42,27 +30,27 @@ Identifier = [a-zA-Z][a-zA-Z0-9]*
 %% 
 
 /* keywords */
-"class"                        { return symbol(Terminals.CLASS); }
-"extends"                      { return symbol(Terminals.EXTENDS); }
+"class"                        { return new Symbol(Terminals.CLASS, yyline, yycolumn, yylength()); }
+"extends"                      { return new Symbol(Terminals.EXTENDS, yyline, yycolumn, yylength()); }
   
 /* boolean literals */
-"true"                         { return symbol(Terminals.TRUE); }
-"false"                        { return symbol(Terminals.FALSE); }
+"true"                         { return new Symbol(Terminals.TRUE, yyline, yycolumn, yylength()); }
+"false"                        { return new Symbol(Terminals.FALSE, yyline, yycolumn, yylength()); }
    
-"while"						   { return symbol(Terminals.WHILE); }
+"while"						   { return new Symbol(Terminals.WHILE, yyline, yycolumn, yylength()); }
   
 /* separators */
-"("                            { return symbol(Terminals.LPAREN); }
-")"                            { return symbol(Terminals.RPAREN); }
-"{"                            { return symbol(Terminals.LBRACE); }
-"}"                            { return symbol(Terminals.RBRACE); }
-";"                            { return symbol(Terminals.SEMICOLON); }
-"."                            { return symbol(Terminals.DOT); }
+"("                            { return new Symbol(Terminals.LPAREN, yyline, yycolumn, yylength()); }
+")"                            { return new Symbol(Terminals.RPAREN, yyline, yycolumn, yylength()); }
+"{"                            { return new Symbol(Terminals.LBRACE, yyline, yycolumn, yylength()); }
+"}"                            { return new Symbol(Terminals.RBRACE, yyline, yycolumn, yylength()); }
+";"                            { return new Symbol(Terminals.SEMICOLON, yyline, yycolumn, yylength()); }
+"."                            { return new Symbol(Terminals.DOT, yyline, yycolumn, yylength()); }
   
 /* operators */
-"="                            { return symbol(Terminals.EQ); }
-"&&"                           { return symbol(Terminals.ANDAND); }
-"||"                           { return symbol(Terminals.OROR); }
+"="                            { return new Symbol(Terminals.EQ, yyline, yycolumn, yylength()); }
+"&&"                           { return new Symbol(Terminals.ANDAND, yyline, yycolumn, yylength()); }
+"||"                           { return new Symbol(Terminals.OROR, yyline, yycolumn, yylength()); }
   
 /* comments */
 {Comment}                      { /* Do nothing with comments */ }
@@ -71,6 +59,6 @@ Identifier = [a-zA-Z][a-zA-Z0-9]*
 {Layout}					   { /* Do nothing with layout */ } 
 
 /* identifiers */
-{Identifier}                   { return symbol(Terminals.IDENTIFIER, yytext()); }
+{Identifier}                   { return new Symbol(Terminals.IDENTIFIER, yyline, yycolumn, yylength(), yytext()); }
 
 [^]							   { throw new Error("Illegal character <"+ yytext()+">"); }
