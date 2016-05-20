@@ -56,7 +56,7 @@
 
 module = MODULE IDENTIFIER.i1 SEMICOLON declaration.ds*  begin_statement_sequence.bs? END IDENTIFIER.i2 DOT {: return new Module(i1, i2, ds, bs.getElements()); :};
 
-begin_statement_sequence = BEGIN statement_sequence.ss {: return new Sequence(ss); :};
+begin_statement_sequence = BEGIN statement_sequence.ss;
 
 declaration =   const_declaration.cd
             |   type_declaration.td
@@ -88,7 +88,7 @@ formal_params   =   formal_params.fps SEMICOLON formal_param.fp {: return new Se
 
 formal_param    =   VAR? ident_list.il COLON type.t {: return new FormalParam(il, t); :};
 
-procedure_body  =   declaration.d* statement_sequence.ss? END IDENTIFIER.i {: return new ProcedureBody(d, ss, i); :};
+procedure_body  =   declaration.d* begin_statement_sequence.ss? END IDENTIFIER.i {: return new ProcedureBody(d, ss, i); :};
 
 type    =   IDENTIFIER.i  {: return new LiteralType(i); :}
         |   array_type.at
