@@ -1,0 +1,164 @@
+%package "oberon0.parser";
+%class "OberonParser";
+
+%terminals begin,end,module,import_,procedure;
+%terminals if_,while_,then,do_,else_,else_if,repeat,until,or;
+%terminals array,of,record,var,const_,char_,integer,long_,type_dec;
+%terminals identifier,number,string_literal;
+%terminals par_open,par_close,dot,comma,colon,semicolon,tilde;
+%terminals brack_open,brack_close,pipe,star,div,mod,amp;
+%terminals plus,minus,eq,hash,st,seq,gt,geq,assign;
+
+%typeof integer = "Number";
+%typeof string_literal, identifier = "String";
+
+%goal Module;
+
+Selector =
+        dot identifier
+    |   brack_open Expression brack_close
+    |   Selector Selector
+    ;
+
+Factor =
+        identifier Selector*
+    |   number
+    |   par_open Expression par_close
+    |   tilde Factor
+    |   string_literal
+    ;
+
+Operator =
+        star
+    |   div
+    |   mod
+    |   amp
+    ;
+
+Term = Factor FactorRepeat*;
+
+FactorRepeat = Operator Factor;
+
+PlusMinOperator =
+        plus
+    |   minus
+    ;
+
+ExpressionOperator =
+        PlusMinOperator
+    |   or
+    ;
+
+LogicalOperator =
+        eq
+    |   hash
+    |   st
+    |   seq
+    |   gt
+    |   geq
+    |   pipe
+    ;
+
+SimpleExpression =
+        PlusMinOperator? Term
+    |   SimpleExpression ExpressionOperator Term
+    ;
+
+Expression = SimpleExpression SimpleExpressionRepeat*;
+
+SimpleExpressionRepeat = LogicalOperator SimpleExpression;
+
+Assignment = identifier Selector assign Expression;
+
+ActualParameters = par_open CommaSeparatedExpressions? par_close;
+
+CommaSeparatedExpressions = Expression ExpressionRepeat*;
+
+ExpressionRepeat = comma Expression;
+
+ProcedureCall = identifier Selector ActualParameters?;
+
+IfStatementStart = if_ Expression then StatementSequence;
+
+ElseIfStatement = else_if Expression then StatementSequence;
+
+ElseStatement = else_ StatementSequence end;
+
+IfStatement = IfStatementStart ElseIfStatement* ElseStatement?;
+
+WhileStatement = while_ Expression do_ StatementSequence end;
+
+RepeatStatement = repeat StatementSequence until Expression semicolon;
+
+Statement =
+        Assignment
+    |   ProcedureCall
+    |   IfStatement
+    |   WhileStatement
+    |   RepeatStatement
+    ;
+
+StatementSequence = Statement StatementRepeat*;
+
+StatementRepeat = semicolon Statement;
+
+IdentifierList = identifier IdentifierRepeat*;
+
+IdentifierRepeat = comma identifier;
+
+ArrayType  = array Expression of Type;
+
+FieldList = IdentifierList colon Type;
+
+RecordType = record RecordTypeInner end;
+
+RecordTypeInner =
+        FieldList
+    |   RecordTypeInner semicolon RecordTypeInner
+    ;
+
+Type =
+        identifier Selector*
+    |   ArrayType
+    |   RecordType
+    |   integer
+    |   long_
+    |   char_
+    ;
+
+FPSection = var? IdentifierList colon Type;
+
+FormalParameters = par_open FormalParametersInner? par_close;
+
+FormalParametersInner = FPSection FPSectionRepeat*;
+
+FPSectionRepeat = semicolon FPSection;
+
+ProcedureHeading = procedure identifier FormalParameters?;
+
+ProcedureBody = Declarations ProcedureBodyOptional? end identifier;
+
+ProcedureBodyOptional = begin StatementSequence;
+
+ProcedureDeclaration = ProcedureHeading semicolon ProcedureBody;
+
+Declarations = ConstDeclaration? TypeDeclaration? VarDeclaration? ProcedureDeclaration* semicolon;
+
+ConstDeclarationPart = identifier eq Expression semicolon;
+
+TypeDeclarationPart = identifier eq Type semicolon;
+
+VarDeclarationPart = IdentifierList colon Type semicolon;
+
+ConstDeclaration = const_ ConstDeclarationPart*;
+
+TypeDeclaration = type_dec TypeDeclarationPart*;
+
+VarDeclaration = var VarDeclarationPart*;
+
+Module = ModuleStart ImportStatement? Declarations ModuleBegin* ModuleEnd;
+
+ModuleStart = module identifier semicolon;
+ModuleEnd  = end identifier dot;
+ImportStatement = import_ IdentifierList semicolon;
+ModuleBegin = begin StatementSequence;

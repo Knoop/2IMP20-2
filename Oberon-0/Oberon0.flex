@@ -14,17 +14,20 @@ import oberon0.parser.OberonParser.Terminals;
 %type Symbol
 %yylexthrow Scanner.Exception
 %eofval{
-	return new Symbol(Terminals.EOF, "end-of-file");
+	return new Symbol(Terminals.EOF);
 %eofval}
 %line
 %column
+
+%{
+    String string;
+%}
 
 letter = [A-z]
 digit = [0-9]
 newLine = \r|\n|\r\n
 ident = {letter} ({letter} | {digit})*
-integer = ({digit})+
-number = {integer}
+number = ({digit})+
 whitespace = {newLine}|[ \t\f]
 stringDelimiter = \"
 
@@ -39,72 +42,71 @@ comment = \(\*[^\(\)\*]*\*\)
 
 <YYINITIAL> {
     /*Keywords*/
-    "BEGIN"         {return new Symbol(Terminals.begin);}
-    "END"           {return new Symbol(Terminals.end);}
-    "MODULE"        {return new Symbol(Terminals.module);}
-    "IMPORT"        {return new Symbol(Terminals.import_);}
-    "PROCEDURE"        {return new Symbol(Terminals.procedure);}
+    "BEGIN"         {return new Symbol(Terminals.BEGIN);}
+    "END"           {return new Symbol(Terminals.END);}
+    "MODULE"        {return new Symbol(Terminals.MODULE);}
+    "IMPORT"        {return new Symbol(Terminals.IMPORT);}
+    "PROCEDURE"        {return new Symbol(Terminals.PROCEDURE);}
 
-    "IF"        {return new Symbol(Terminals.if_);}
-    "WHILE"        {return new Symbol(Terminals.while_);}
-    "THEN"        {return new Symbol(Terminals.then);}
-    "DO"        {return new Symbol(Terminals.do_);}
-    "ELSE"        {return new Symbol(Terminals.else_);}
-    "ELSIF"        {return new Symbol(Terminals.else_if);}
-    "REPEAT"        {return new Symbol(Terminals.repeat);}
-    "UNTIL"        {return new Symbol(Terminals.until);}
+    "IF"        {return new Symbol(Terminals.IF);}
+    "WHILE"        {return new Symbol(Terminals.WHILE);}
+    "THEN"        {return new Symbol(Terminals.THEN);}
+    "DO"        {return new Symbol(Terminals.DO);}
+    "ELSE"        {return new Symbol(Terminals.ELSE);}
+    "ELSIF"        {return new Symbol(Terminals.ELSIF);}
+    "REPEAT"        {return new Symbol(Terminals.REPEAT);}
+    "UNTIL"        {return new Symbol(Terminals.UNTIL);}
 
-    "ARRAY"        {return new Symbol(Terminals.array);}
-    "OF"        {return new Symbol(Terminals.of);}
-    "RECORD"        {return new Symbol(Terminals.record);}
-    "VAR"        {return new Symbol(Terminals.var);}
-    "CONST"        {return new Symbol(Terminals.const_);}
-    "CHAR"        {return new Symbol(Terminals.char_);}
-    "INTEGER"        {return new Symbol(Terminals.integer);}
-    "LONGINT"        {return new Symbol(Terminals.long_);}
-    "TYPE"          {return new Symbol(Terminals.type_dec);}
+    "ARRAY"        {return new Symbol(Terminals.ARRAY);}
+    "OF"        {return new Symbol(Terminals.OF);}
+    "RECORD"        {return new Symbol(Terminals.RECORD);}
+    "VAR"        {return new Symbol(Terminals.VAR);}
+    "CONST"        {return new Symbol(Terminals.CONST);}
+    "CHAR"        {return new Symbol(Terminals.CHAR);}
+    "INTEGER"        {return new Symbol(Terminals.INTEGER);}
+    "LONGINT"        {return new Symbol(Terminals.LONGINT);}
+    "TYPE"          {return new Symbol(Terminals.TYPE);}
 
     /*separators*/
-    "("        {return new Symbol(Terminals.par_open);}
-    ")"        {return new Symbol(Terminals.par_close);}
-    "."        {return new Symbol(Terminals.dot);}
-    ","        {return new Symbol(Terminals.comma);}
-    ":"         {return new Symbol(Terminals.colon);}
-    ";"        {return new Symbol(Terminals.semicolon);}
-    "["        {return new Symbol(Terminals.brack_open);}
-    "]"        {return new Symbol(Terminals.brack_close);}
-    "|"        {return new Symbol(Terminals.pipe);}
+    "("        {return new Symbol(Terminals.PAR_OPEN);}
+    ")"        {return new Symbol(Terminals.PAR_CLOSE);}
+    "."        {return new Symbol(Terminals.DOT);}
+    ","        {return new Symbol(Terminals.COMMA);}
+    ":"         {return new Symbol(Terminals.COLON);}
+    ";"        {return new Symbol(Terminals.SEMICOLON);}
+    "["        {return new Symbol(Terminals.BRACK_OPEN);}
+    "]"        {return new Symbol(Terminals.BRACK_CLOSE);}
+    "|"        {return new Symbol(Terminals.PIPE);}
 
     /*operators*/
-    "*"        {return new Symbol(Terminals.star);}
-    "DIV"        {return new Symbol(Terminals.div);}
-    "MOD"        {return new Symbol(Terminals.mod);}
-    "&"        {return new Symbol(Terminals.amp);}
-    "+"        {return new Symbol(Terminals.plus);}
-    "-"        {return new Symbol(Terminals.minus);}
-    "OR"        {return new Symbol(Terminals.or);}
-    "="        {return new Symbol(Terminals.eq);}
-    "#"        {return new Symbol(Terminals.hash);}
-    "<"        {return new Symbol(Terminals.st);}
-    "<="        {return new Symbol(Terminals.seq);}
-    ">"        {return new Symbol(Terminals.gt);}
-    ">="        {return new Symbol(Terminals.geq);}
-    "~"        {return new Symbol(Terminals.tilde);}
+    "*"        {return new Symbol(Terminals.STAR);}
+    "DIV"        {return new Symbol(Terminals.DIV);}
+    "MOD"        {return new Symbol(Terminals.MOD);}
+    "&"        {return new Symbol(Terminals.AMP);}
+    "+"        {return new Symbol(Terminals.PLUS);}
+    "-"        {return new Symbol(Terminals.MINUS);}
+    "OR"        {return new Symbol(Terminals.OR);}
+    "="        {return new Symbol(Terminals.EQ);}
+    "#"        {return new Symbol(Terminals.HASH);}
+    "<"        {return new Symbol(Terminals.ST);}
+    "<="        {return new Symbol(Terminals.SEQ);}
+    ">"        {return new Symbol(Terminals.GT);}
+    ">="        {return new Symbol(Terminals.GEG);}
+    "~"        {return new Symbol(Terminals.TILDE);}
 
-    ":="        {return new Symbol(Terminals.assign);}
+    ":="        {return new Symbol(Terminals.ASSIGN);}
 
     {comment}      { /* ignore */ }
 
-    {stringDelimiter}        { yybegin(STRING); }
+    {stringDelimiter}        { yybegin(STRING); string = "";}
 
-    {ident}         {return new Symbol(Terminals.identifier);}
-    {integer}       {return new Symbol(Terminals.number);}
-    {number}       {return new Symbol(Terminals.number);}
+    {ident}         {return new Symbol(Terminals.IDENTIFIER, yytext());}
+    {number}       {return new Symbol(Terminals.NUMBER, yytext());}
     {whitespace}    { /* ignore */ }
 }
 
 <STRING> {
     {stringDelimiter}   { yybegin(YYINITIAL);
-                         return new Symbol(Terminals.string_literal); }
-    {stringChars}      {/* ignore */}
+                         return new Symbol(Terminals.STRING_LITERAL, string); }
+    {stringChars}      { string += yytext(); }
 }
