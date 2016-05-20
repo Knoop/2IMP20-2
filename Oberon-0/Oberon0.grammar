@@ -23,25 +23,25 @@
 %typeof var_declaration = "VarDeclaration";
 %typeof var_declaration_assignment = "VarDeclarationAssignment";
 %typeof formal_param =  "FormalParam";
-%typeof formal_params = "List<FormalParam>";
-%typeof actual_params = "List<Expression>";
+%typeof formal_params = "Sequence<FormalParam>";
+%typeof actual_params = "Sequence<Expression>";
 %typeof procedure_declaration = "ProcedureDeclaration";
 %typeof procedure_heading = "ProcedureHeading";
-%typeof procedure_heading_param = "List<FormalParam>";
+%typeof procedure_heading_param = "Sequence<FormalParam>";
 %typeof procedure_body = "ProcedureBody";
 %typeof type = "Type";
-%typeof ident_list = "List<String>";
+%typeof ident_list = "Sequence<String>";
 %typeof array_type = "ArrayType";
 %typeof record_type = "RecordType";
-%typeof field_list = "List<Field>";
+%typeof field_list = "Sequence";
 %typeof field = "Field";
-%typeof statement_sequence = "List<Statement>";
+%typeof statement_sequence = "Sequence<Statement>";
 %typeof statement = "Statement";
 %typeof assignment_statement = "AssignmentStatement";
 %typeof procedure_call_statement = "ProcedureCallStatement";
 %typeof if_statement = "IfStatement";
 %typeof while_statement = "WhileStatement";
-%typeof expressions = "List<Expression>";
+%typeof expressions = "Sequence<Expression>";
 %typeof otherwise = "ElseStatement";
 %typeof term = "Term";
 %typeof simple_expression, expression, signed_term, comparison = "Expression";
@@ -82,8 +82,8 @@ procedure_heading   =   PROCEDURE IDENTIFIER.i procedure_heading_param.php? {: r
 
 procedure_heading_param     =   PAR_OPEN formal_params.fps? PAR_CLOSE;
 
-formal_params   =   formal_params.fps SEMICOLON formal_param.fp {: fps.add(fp); return new Sequence(fps); :}
-                |   formal_param.fp {: List<FormalParam> l = new LinkedList<>(); l.add(fp); return new Sequence(l); :}
+formal_params   =   formal_params.fps SEMICOLON formal_param.fp {: return new Sequence<FormalParam>(fps, fp); :}
+                |   formal_param.fp {: return new Sequence<FormalParam>(fp); :}
                 ;
 
 formal_param    =   VAR? ident_list.il COLON type.t {: return new FormalParam(il, t); :};
@@ -99,14 +99,14 @@ array_type  =   ARRAY expression.e OF type.t {: return new ArrayType(e, t); :};
 
 record_type =   RECORD field_list.fls END {: return new RecordType(fls); :};
 
-field_list  =   field_list.fls SEMICOLON field.f? {: fls.add(f); return new Sequence(fls); :}
-            |   field.f? {: List<Field> l = new LinkedList<>(); l.add(f); return new Sequence(l); :}
+field_list  =   field_list.fls SEMICOLON field.f? {: return new Sequence<Field>(fls, f); :}
+            |   field.f? {: return new Sequence<Field>(f); :}
             ;
 
 field   =   ident_list.il COLON type.t {: return new Field(il, t); :};
 
-ident_list  =   ident_list.il COMMA IDENTIFIER.i {: il.add(i); return new Sequence(il); :}
-            |   IDENTIFIER.i {: List<String> il = new LinkedList<>(); il.add(i); return new Sequence(il); :}
+ident_list  =   ident_list.il COMMA IDENTIFIER.i {: return new Sequence<String>(il, i); :}
+            |   IDENTIFIER.i {: return new Sequence<String>(i); :}
             ;
 
 statement           = assignment_statement.a
@@ -115,8 +115,8 @@ statement           = assignment_statement.a
                     | while_statement.ws
                     ;
 
-statement_sequence  =   statement_sequence.ss SEMICOLON statement.s {: ss.add(s); return new Sequence(ss); :}
-                    |   statement.s {: List<Statement> ls = new LinkedList<>(); ls.add(s); return new Sequence(ls); :}
+statement_sequence  =   statement_sequence.ss SEMICOLON statement.s {: return new Sequence<Statement>(ss, s); :}
+                    |   statement.s {: return new Sequence<Statement>(s); :}
                     ;
 
 while_statement     =   WHILE expression.e DO statement_sequence.ss END {: return new WhileStatement(e, ss); :};
@@ -127,8 +127,8 @@ procedure_call_statement      =   reference.rf actual_params.aps? {: return new 
 
 actual_params       =   PAR_OPEN expressions.es? PAR_CLOSE;
 
-expressions         =   expressions.es COMMA expression.e {: es.add(e); return new Sequence(es); :}
-                    |   expression.e {: List<Expression> es = new LinkedList<>(); es.add(e); return new Sequence(es); :}
+expressions         =   expressions.es COMMA expression.e {: return new Sequence<Expression>(es, e); :}
+                    |   expression.e {: return new Sequence<Expression>(e); :}
                     ;
 
 if_statement        =   IF expression.e THEN statement_sequence.ss otherwise.o? END {: return new IfStatement(e, ss, o); :};

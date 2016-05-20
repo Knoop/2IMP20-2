@@ -11,8 +11,8 @@ public class RecordType extends Type {
 
     private List<Field> fields;
 
-    public RecordType(List<Field> fields) {
-        this.fields = fields;
+    public RecordType(Sequence<Field> fields) {
+        this.fields = fields.getElements();
     }
 
     public List<Field> getFields() {

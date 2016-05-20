@@ -13,9 +13,9 @@ public class IfStatement extends Statement {
     List<Statement> statements;
     ElseStatement elseStatement;
 
-    public IfStatement(Expression expression, List<Statement> statements, ElseStatement elseStatement) {
+    public IfStatement(Expression expression, Sequence<Statement> statements, ElseStatement elseStatement) {
         this.expression = expression;
-        this.statements = statements;
+        this.statements = statements.getElements();
         this.elseStatement = elseStatement;
     }
 

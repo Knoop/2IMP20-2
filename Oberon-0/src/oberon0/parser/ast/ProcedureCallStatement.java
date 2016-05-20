@@ -7,9 +7,9 @@ public class ProcedureCallStatement extends Statement {
     private Reference reference;
     private List<Expression> parameters;
 
-    public ProcedureCallStatement(Reference reference, List<Expression> parameters) {
+    public ProcedureCallStatement(Reference reference, Sequence<Expression> parameters) {
         this.reference = reference;
-        this.parameters = parameters;
+        this.parameters = parameters.getElements();
     }
 
     public Reference getReference() {

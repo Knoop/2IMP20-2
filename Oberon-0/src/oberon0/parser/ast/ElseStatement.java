@@ -12,8 +12,8 @@ public class ElseStatement extends Statement {
         this.statementsForElse = null;
     }
 
-    public ElseStatement(List<Statement> ss) {
-        this.statementsForElse = ss;
+    public ElseStatement(Sequence<Statement> ss) {
+        this.statementsForElse = ss.getElements();
         this.statementForElseIf = null;
     }
 

@@ -7,10 +7,12 @@ public class ProcedureHeading extends LangCons {
     private String identifier;
     private List<FormalParam> parameters;
 
-    public ProcedureHeading(String identifier, List<FormalParam> parameters) {
+    public ProcedureHeading(String identifier, Sequence<FormalParam> parameters) {
         this.identifier = identifier;
-        this.parameters = parameters;
+        this.parameters = parameters.getElements();
     }
+
+
 
     public String getIdentifier() {
         return identifier;

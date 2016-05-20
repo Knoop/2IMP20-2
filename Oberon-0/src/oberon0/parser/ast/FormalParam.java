@@ -7,8 +7,8 @@ public class FormalParam extends LangCons {
     private List<String> identifiers;
     private Type type;
 
-    public FormalParam(List<String> identifiers, Type type) {
-        this.identifiers = identifiers;
+    public FormalParam(Sequence<String> identifiers, Type type) {
+        this.identifiers = identifiers.getElements();
         this.type = type;
     }
 

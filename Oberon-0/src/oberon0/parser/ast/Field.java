@@ -7,8 +7,8 @@ public class Field extends LangCons {
     private List<String> identifiers;
     private Type type;
 
-    public Field(List<String> identifiers, Type type) {
-        this.identifiers = identifiers;
+    public Field(Sequence<String> identifiers, Type type) {
+        this.identifiers = identifiers.getElements();
         this.type = type;
     }
 

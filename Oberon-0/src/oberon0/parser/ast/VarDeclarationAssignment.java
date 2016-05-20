@@ -7,8 +7,8 @@ public class VarDeclarationAssignment extends LangCons{
     private List<String> identifiers;
     private Type type;
 
-    public VarDeclarationAssignment(List<String> identifiers, Type type) {
-        this.identifiers = identifiers;
+    public VarDeclarationAssignment(Sequence<String> identifiers, Type type) {
+        this.identifiers = identifiers.getElements();
         this.type = type;
     }
 
