@@ -4,19 +4,17 @@ import java.util.List;
 
 public class ProcedureBody extends LangCons {
 
-    private Declaration[] declarations;
+
+    private DeclarationGroup declarationGroup;
     private List<Statement> statements;
     private String identifier;
 
-    public ProcedureBody(Declaration[] declarations, Sequence<Statement> statements, String identifier) {
-        this.declarations = declarations;
+    public ProcedureBody(DeclarationGroup gd, Sequence<Statement> statements, String identifier) {
+        this.declarationGroup = gd;
         this.statements = statements.getElements();
         this.identifier = identifier;
     }
 
-    public Declaration[] getDeclarations() {
-        return declarations;
-    }
 
     public List<Statement> getStatements() {
         return statements;

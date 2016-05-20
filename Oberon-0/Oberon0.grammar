@@ -15,7 +15,7 @@
 
 %typeof module = "Module";
 %typeof begin_statement_sequence = "Sequence<Statement>";
-%typeof declaration = "Declaration";
+%typeof declaration_group = "DeclarationGroup";
 %typeof const_declaration = "ConstDeclaration";
 %typeof const_declaration_assign = "ConstDeclarationAssignment";
 %typeof type_declaration = "TypeDeclaration";
@@ -54,15 +54,12 @@
 
 %goal module;
 
-module = MODULE IDENTIFIER.i1 SEMICOLON declaration.ds*  begin_statement_sequence.bs? END IDENTIFIER.i2 DOT {: return new Module(i1, i2, ds, bs.getElements()); :};
+module = MODULE IDENTIFIER.i1 SEMICOLON declaration_group.gd begin_statement_sequence.bs? END IDENTIFIER.i2 DOT {: return new Module(i1, i2, gd, bs.getElements()); :};
 
 begin_statement_sequence = BEGIN statement_sequence.ss;
 
-declaration =   const_declaration.cd
-            |   type_declaration.td
-            |   var_declaration.vd
-            |   procedure_declaration.pd
-            ;
+declaration_group    =   const_declaration.cd? type_declaration.td? var_declaration.vd? procedure_declaration.pd? {: return new DeclarationGroup(cd,td,vd,pd); :};
+
 
 const_declaration = CONST const_declaration_assign.cda* {: return new ConstDeclaration(cda); :};
 
@@ -88,7 +85,7 @@ formal_params   =   formal_params.fps SEMICOLON formal_param.fp {: return new Se
 
 formal_param    =   VAR? ident_list.il COLON type.t {: return new FormalParam(il, t); :};
 
-procedure_body  =   declaration.d* begin_statement_sequence.ss? END IDENTIFIER.i {: return new ProcedureBody(d, ss, i); :};
+procedure_body  =   declaration_group.gd begin_statement_sequence.ss? END IDENTIFIER.i {: return new ProcedureBody(gd, ss, i); :};
 
 type    =   IDENTIFIER.i  {: return new LiteralType(i); :}
         |   array_type.at

@@ -6,10 +6,10 @@ public class Module extends LangCons {
 
     private String identifier1;
     private String identifier2;
-    private Declaration[] declarations;
+    private DeclarationGroup declarations;
     private List<Statement> statements;
 
-    public Module(String identifier1, String identifier2, Declaration[] declarations, List<Statement> statements) {
+    public Module(String identifier1, String identifier2, DeclarationGroup declarations, List<Statement> statements) {
         this.identifier1 = identifier1;
         this.identifier2 = identifier2;
         this.declarations = declarations;
@@ -24,7 +24,7 @@ public class Module extends LangCons {
         return identifier2;
     }
 
-    public Declaration[] getDeclarations() {
+    public DeclarationGroup getDeclarations() {
         return declarations;
     }
 
