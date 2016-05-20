@@ -1,0 +1,65 @@
+%package "picojava";
+%class "PicoJavaParser";
+
+%import "picojava.lang.ast.*";
+
+%terminals IDENTIFIER, LPAREN, RPAREN, LBRACE, RBRACE, CLASS, EXTENDS, SEMICOLON;
+%terminals WHILE, OROR, ANDAND, DOT, TRUE, FALSE, EQ;
+
+%typeof expr 							= "Expr";
+%typeof extends, name					= "Name";
+%typeof use								= "LitName";
+
+%typeof block 							= "Block";
+%typeof block_statement 				= "BlockStatement";
+%typeof statement 						= "Statement";
+%typeof class_decl						= "ClassDecl";
+%typeof var_decl						= "VarDecl";
+%typeof assign_statement				= "AssignStatement";
+%typeof while_statement					= "WhileStatement";
+%typeof IDENTIFIER						= "String";
+
+%goal block;
+
+block 				= LBRACE block_statement.bs* RBRACE 	{: return new Block(bs); :}
+					;
+
+block_statement 	= class_decl.cd 						{: return cd; :}
+					| var_decl.vd  							{: return vd; :}
+					| statement.s 							{: return s; :}
+					;
+
+statement 			= assign_statement.as 					{: return as; :}
+					| while_statement.ws					{: return ws; :}
+					;
+
+class_decl			= CLASS use.u extends.e block.b			{: return new ClassDecl(u, e, b); :}
+					| CLASS use.u block.b					{: return new ClassDecl(u, null, b); :}
+					;
+
+extends 			= EXTENDS use.u							{: return u; :}
+					;
+
+var_decl			= name.n use.u SEMICOLON				{: return new VarDecl(n, u); :}
+					;
+
+assign_statement	= name.n EQ expr.e SEMICOLON			{: return new AssignStatement(n, e); :}
+					;
+
+while_statement		= WHILE LPAREN expr.e RPAREN statement.s{: return new WhileStatement(e, s); :}
+					;
+
+expr				= name.n								{: return new VarExpr(n); :}
+					| TRUE									{: return new LitExpr(true); :}
+					| FALSE									{: return new LitExpr(false); :}
+					| expr.a ANDAND expr.b					{: return new AndExpr(a, b); :}
+					| expr.a OROR expr.b					{: return new OrExpr(a, b); :}
+					| LPAREN expr.e RPAREN					{: return e; :}
+					;
+
+use 				= IDENTIFIER.i							{: return new LitName(i); :}
+					;
+
+name 				= use.u									{: return new ComposedName(u); :}
+					| name.n DOT use.u						{: return new ComposedName(n, u); :}
+					;
