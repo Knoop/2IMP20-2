@@ -1,6 +1,6 @@
 package oberon0.parser.ast;
 
-public class GreaterComparison extends Expression {
+public class GreaterComparison extends Comparison {
 
     private Expression e1;
     private Expression e2;

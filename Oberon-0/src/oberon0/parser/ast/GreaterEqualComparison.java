@@ -3,7 +3,7 @@ package oberon0.parser.ast;
 /**
  * Created by Guus on 20-05-16.
  */
-public class GreaterEqualComparison extends Expression {
+public class GreaterEqualComparison extends Comparison {
 
     private Expression e1;
     private Expression e2;
