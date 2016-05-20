@@ -1,0 +1,179 @@
+%package "oberon0.parser";
+%class "OberonParser";
+
+%import "oberon0.parser.ast.*";
+%import "java.util.List";
+%import "java.util.LinkedList";
+
+%terminals BEGIN,END,MODULE,PROCEDURE;
+%terminals IF,WHILE,THEN,DO,ELSE,ELSIF,OR;
+%terminals ARRAY,OF,RECORD,VAR,CONST,TYPE;
+%terminals IDENTIFIER,NUMBER;
+%terminals PAR_OPEN,PAR_CLOSE,DOT,COMMA,COLON,SEMICOLON,TILDE;
+%terminals BRACK_OPEN,BRACK_CLOSE,STAR,DIV,MOD,AMP;
+%terminals PLUS,MINUS,EQ,HASH,ST,SEQ,GT,GEQ,ASSIGN;
+
+%typeof module = "Module";
+%typeof begin_statement_sequence = "Sequence<Statement>";
+%typeof declaration_group = "DeclarationGroup";
+%typeof const_declaration = "ConstDeclaration";
+%typeof const_declaration_assign = "ConstDeclarationAssignment";
+%typeof type_declaration = "TypeDeclaration";
+%typeof type_declaration_assign = "TypeDeclarationAssignment";
+%typeof var_declaration = "VarDeclaration";
+%typeof var_declaration_assignment = "VarDeclarationAssignment";
+%typeof formal_param =  "FormalParam";
+%typeof formal_params = "Sequence<FormalParam>";
+%typeof actual_params = "Sequence<Expression>";
+%typeof procedure_declaration = "ProcedureDeclaration";
+%typeof procedure_heading = "ProcedureHeading";
+%typeof procedure_heading_param = "Sequence<FormalParam>";
+%typeof procedure_body = "ProcedureBody";
+%typeof type = "Type";
+%typeof ident_list = "Sequence<String>";
+%typeof array_type = "ArrayType";
+%typeof record_type = "RecordType";
+%typeof field_list = "Sequence";
+%typeof field = "Field";
+%typeof statement_sequence = "Sequence<Statement>";
+%typeof statement = "Statement";
+%typeof assignment_statement = "AssignmentStatement";
+%typeof procedure_call_statement = "ProcedureCallStatement";
+%typeof if_statement = "IfStatement";
+%typeof while_statement = "WhileStatement";
+%typeof expressions = "Sequence<Expression>";
+%typeof otherwise = "ElseStatement";
+%typeof term = "Term";
+%typeof simple_expression, expression, signed_term, comparison = "Expression";
+%typeof factor = "Factor";
+%typeof reference = "Reference";
+%typeof selector = "Selector";
+
+%typeof IDENTIFIER = "String";
+%typeof NUMBER = "String";
+
+%goal module;
+
+module = MODULE IDENTIFIER.i1 SEMICOLON declaration_group.gd begin_statement_sequence.bs? END IDENTIFIER.i2 DOT {: return new Module(i1, i2, gd, bs.getElements()); :};
+
+begin_statement_sequence = BEGIN statement_sequence.ss;
+
+declaration_group    =   const_declaration.cd? type_declaration.td? var_declaration.vd? procedure_declaration.pd? {: return new DeclarationGroup(cd,td,vd,pd); :};
+
+
+const_declaration = CONST const_declaration_assign.cda* {: return new ConstDeclaration(cda); :};
+
+const_declaration_assign    =   IDENTIFIER.i EQ expression.e SEMICOLON {: return new ConstDeclarationAssignment(i, e); :};
+
+type_declaration    =   TYPE type_declaration_assign.tda* {: return new TypeDeclaration(tda); :};
+
+type_declaration_assign = IDENTIFIER.i EQ type.t SEMICOLON {: return new TypeDeclarationAssignment(i, t); :};
+
+var_declaration =   VAR var_declaration_assignment.vda* {: return new VarDeclaration(vda); :};
+
+var_declaration_assignment   =   ident_list.il COLON type.t SEMICOLON {: return new VarDeclarationAssignment(il, t); :};
+
+procedure_declaration   =   procedure_heading.ph SEMICOLON procedure_body.pb {: return new ProcedureDeclaration(ph, pb); :};
+
+procedure_heading   =   PROCEDURE IDENTIFIER.i procedure_heading_param.php? {: return new ProcedureHeading(i, php); :};
+
+procedure_heading_param     =   PAR_OPEN formal_params.fps? PAR_CLOSE;
+
+formal_params   =   formal_params.fps SEMICOLON formal_param.fp {: return new Sequence<FormalParam>(fps, fp); :}
+                |   formal_param.fp {: return new Sequence<FormalParam>(fp); :}
+                ;
+
+formal_param    =   VAR? ident_list.il COLON type.t {: return new FormalParam(il, t); :};
+
+procedure_body  =   declaration_group.gd begin_statement_sequence.ss? END IDENTIFIER.i {: return new ProcedureBody(gd, ss, i); :};
+
+type    =   IDENTIFIER.i  {: return new LiteralType(i); :}
+        |   array_type.at
+        |   record_type.rt
+        ;
+
+array_type  =   ARRAY expression.e OF type.t {: return new ArrayType(e, t); :};
+
+record_type =   RECORD field_list.fls END {: return new RecordType(fls); :};
+
+field_list  =   field_list.fls SEMICOLON field.f? {: return new Sequence<Field>(fls, f); :}
+            |   field.f? {: return new Sequence<Field>(f); :}
+            ;
+
+field   =   ident_list.il COLON type.t {: return new Field(il, t); :};
+
+ident_list  =   ident_list.il COMMA IDENTIFIER.i {: return new Sequence<String>(il, i); :}
+            |   IDENTIFIER.i {: return new Sequence<String>(i); :}
+            ;
+
+statement           = assignment_statement.a
+                    | procedure_call_statement.pc
+                    | if_statement.is
+                    | while_statement.ws
+                    ;
+
+statement_sequence  =   statement_sequence.ss SEMICOLON statement.s {: return new Sequence<Statement>(ss, s); :}
+                    |   statement.s {: return new Sequence<Statement>(s); :}
+                    ;
+
+while_statement     =   WHILE expression.e DO statement_sequence.ss END {: return new WhileStatement(e, ss); :};
+
+assignment_statement    =   reference.rf ASSIGN expression.e {: return new AssignStatement(rf, e); :};
+
+procedure_call_statement      =   reference.rf actual_params.aps? {: return new ProcedureCallStatement(rf, aps); :};
+
+actual_params       =   PAR_OPEN expressions.es? PAR_CLOSE;
+
+expressions         =   expressions.es COMMA expression.e {: return new Sequence<Expression>(es, e); :}
+                    |   expression.e {: return new Sequence<Expression>(e); :}
+                    ;
+
+if_statement        =   IF expression.e THEN statement_sequence.ss otherwise.o? END {: return new IfStatement(e, ss, o); :};
+
+otherwise   =   ELSIF expression.e THEN statement_sequence.ss otherwise.o? {: return new ElseStatement(new IfStatement(e, ss, o)); :}
+            |   ELSE statement_sequence.ss {: return new ElseStatement(ss); :}
+            ;
+
+expression  =   simple_expression.se
+            |   comparison.c
+            ;
+
+comparison  =   simple_expression.se1 EQ simple_expression.se2 {: return new EqualComparison(se1, se2); :}
+            |   simple_expression.se1 HASH simple_expression.se2  {: return new HashComparison(se1, se2); :}
+            |   simple_expression.se1 ST simple_expression.se2  {: return new SmallerComparison(se1, se2); :}
+            |   simple_expression.se1 SEQ simple_expression.se2  {: return new SmallerEqualComparison(se1, se2); :}
+            |   simple_expression.se1 GT simple_expression.se2 {: return new GreaterComparison(se1, se2); :}
+            |   simple_expression.se1 GEQ simple_expression.se2  {: return new GreaterEqualComparison(se1, se2); :}
+            ;
+
+simple_expression   =   signed_term.st
+                    |   simple_expression.se PLUS term.t {: return new AddExpression(se, t); :}
+                    |   simple_expression.se MINUS term.t {: return new SubtractExpression(se, t); :}
+                    |   simple_expression.se OR term.t{: return new OrExpression(se, t); :}
+                    ;
+
+signed_term =   PLUS term.t {: return new PositiveTerm(t); :}
+            |   MINUS term.t {: return new NegativeTerm(t); :}
+            |   term.t
+            ;
+
+term    =   factor.f
+        |   term.t STAR factor.f {: return new MultiplicationTerm(t, f); :}
+        |   term.t DIV factor.f {: return new DivisionTerm(t, f); :}
+        |   term.t MOD factor.f {: return new ModuloTerm(t, f); :}
+        |   term.t AMP factor.f {: return new AndTerm(t, f); :}
+        ;
+
+factor  =   reference.rf {: return new VariableFactor(rf); :}
+        |   NUMBER.n {: return new LiteralFactor(n); :}
+        |   PAR_OPEN expression.e PAR_CLOSE
+        |   TILDE factor.f {: return new NegatedFactor(f); :}
+        ;
+
+reference   =   IDENTIFIER.i    {: return new BaseReference(i); :}
+            |   reference.rf selector.s {: return new SelectedReference(rf, s); :}
+            ;
+
+selector   =   DOT IDENTIFIER.i {: return new AttributeSelector(i); :}
+           |   BRACK_OPEN expression.e BRACK_CLOSE {: return new IndexSelector(e); :}
+           ;
