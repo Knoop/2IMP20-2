@@ -35,8 +35,6 @@ stringChars = [^\"]
 
 comment = \(\*[^\(\)\*]*\*\)
 
-%state STRING
-
 %%
 
 
@@ -45,7 +43,6 @@ comment = \(\*[^\(\)\*]*\*\)
     "BEGIN"         {return new Symbol(Terminals.BEGIN);}
     "END"           {return new Symbol(Terminals.END);}
     "MODULE"        {return new Symbol(Terminals.MODULE);}
-    "IMPORT"        {return new Symbol(Terminals.IMPORT);}
     "PROCEDURE"        {return new Symbol(Terminals.PROCEDURE);}
 
     "IF"        {return new Symbol(Terminals.IF);}
@@ -54,17 +51,12 @@ comment = \(\*[^\(\)\*]*\*\)
     "DO"        {return new Symbol(Terminals.DO);}
     "ELSE"        {return new Symbol(Terminals.ELSE);}
     "ELSIF"        {return new Symbol(Terminals.ELSIF);}
-    "REPEAT"        {return new Symbol(Terminals.REPEAT);}
-    "UNTIL"        {return new Symbol(Terminals.UNTIL);}
 
     "ARRAY"        {return new Symbol(Terminals.ARRAY);}
     "OF"        {return new Symbol(Terminals.OF);}
     "RECORD"        {return new Symbol(Terminals.RECORD);}
     "VAR"        {return new Symbol(Terminals.VAR);}
     "CONST"        {return new Symbol(Terminals.CONST);}
-    "CHAR"        {return new Symbol(Terminals.CHAR);}
-    "INTEGER"        {return new Symbol(Terminals.INTEGER);}
-    "LONGINT"        {return new Symbol(Terminals.LONGINT);}
     "TYPE"          {return new Symbol(Terminals.TYPE);}
 
     /*separators*/
@@ -76,7 +68,6 @@ comment = \(\*[^\(\)\*]*\*\)
     ";"        {return new Symbol(Terminals.SEMICOLON);}
     "["        {return new Symbol(Terminals.BRACK_OPEN);}
     "]"        {return new Symbol(Terminals.BRACK_CLOSE);}
-    "|"        {return new Symbol(Terminals.PIPE);}
 
     /*operators*/
     "*"        {return new Symbol(Terminals.STAR);}
@@ -91,22 +82,16 @@ comment = \(\*[^\(\)\*]*\*\)
     "<"        {return new Symbol(Terminals.ST);}
     "<="        {return new Symbol(Terminals.SEQ);}
     ">"        {return new Symbol(Terminals.GT);}
-    ">="        {return new Symbol(Terminals.GEG);}
+    ">="        {return new Symbol(Terminals.GEQ);}
     "~"        {return new Symbol(Terminals.TILDE);}
 
     ":="        {return new Symbol(Terminals.ASSIGN);}
 
     {comment}      { /* ignore */ }
 
-    {stringDelimiter}        { yybegin(STRING); string = "";}
+    {stringDelimiter}        { /* ignore */ }
 
     {ident}         {return new Symbol(Terminals.IDENTIFIER, yytext());}
     {number}       {return new Symbol(Terminals.NUMBER, yytext());}
     {whitespace}    { /* ignore */ }
-}
-
-<STRING> {
-    {stringDelimiter}   { yybegin(YYINITIAL);
-                         return new Symbol(Terminals.STRING_LITERAL, string); }
-    {stringChars}      { string += yytext(); }
 }
